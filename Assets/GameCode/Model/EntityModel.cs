@@ -52,6 +52,21 @@ public class EntityModel : ICastEntity, IEventBus
         CastWorldModel.Get().AddEntity(this);
     }
 
+	bool _destroyed = false;
+	~EntityModel() 
+	{
+		if (!_destroyed) {
+			Debug.LogError ("EntityModel destructor called before Destroy(), someone forgot to clean up");
+			this.Destroy ();
+		}
+	}
+	public void Destroy()
+	{
+		_destroyed = true;
+		CastWorldModel.Get().RemoveEntity(this);
+		eventBus.Destroy();
+	}
+
     public string getName()
     {
         return m_name;
@@ -79,13 +94,7 @@ public class EntityModel : ICastEntity, IEventBus
             m_stats["hp_base"] = value;
         }
     }
-
-    public void Destroy()
-    {
-        CastWorldModel.Get().RemoveEntity(this);
-        eventBus.Destroy();
-    }
-
+		
     public JToken toJson()
     {
         return JToken.FromObject(this);

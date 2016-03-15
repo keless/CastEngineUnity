@@ -27,22 +27,22 @@ public class CastCommandTime
 }
 
 
-public class ICastPhysics
+public interface ICastPhysics
 {
     // in: ICastEntity fromEntity, ICastEntity toEntity
     // out: null or Vec2D distVec
-    public Vector2? GetVecBetween(ICastEntity fromEntity, ICastEntity toEntity )
-    { return null; }
+	Vector3? GetVecBetween(ICastEntity fromEntity, ICastEntity toEntity );
+    //{ return null; }
 
     // in: ICastEntity entity
     // out: null or Vec2D pos
-    public Vector2? GetEntityPosition(ICastEntity entity )
-    { return null; }
+	Vector3? GetEntityPosition(ICastEntity entity );
+    //{ return null; }
 
     // in: Vec2D p, float r, array[ICastEntity] ignoreEntities
     // out: array<ICastEntity> entities
-    public List<ICastEntity> GetEntitiesInRadius(Vector2 p, float r, List<ICastEntity> ignoreEntities = null )
-    { return new List<ICastEntity>(); }
+	List<ICastEntity> GetEntitiesInRadius(Vector3 p, float r, List<ICastEntity> ignoreEntities = null );
+    //{ return new List<ICastEntity>(); }
 }
 
 
@@ -52,7 +52,7 @@ public class CastEffectPath
     public double speed = 0;
     public ICastEntity from = null;
     public ICastEntity to = null;
-    public Vector2 toPosition = new Vector2();
+    public Vector3 toPosition = new Vector3();
     public float radius = 0.0f;
     public List<CastEffect> effects = new List<CastEffect>();
 }
@@ -77,6 +77,12 @@ public class CastWorldModel
     {
         return CastWorldModel.instance;
     }
+
+	#if UNITY_EDITOR
+	public static void Reset() {
+		instance = new CastWorldModel ();
+	}
+	#endif
 
     Dictionary<ICastEntity, ICastEntity> m_allEntities = new Dictionary<ICastEntity, ICastEntity>();
     List<CastEffectPath> m_effectsInTransit = new List<CastEffectPath>();
@@ -209,10 +215,10 @@ public class CastWorldModel
                     if (effect.isAoe())
                     {
                         var radius = (float)effect.getDescriptor("aoeRadius");
-                        Vector2? p = this.m_pPhysics.GetEntityPosition(path.to);
+                        Vector3? p = this.m_pPhysics.GetEntityPosition(path.to);
                         if (p.HasValue)
                         {
-                            Debug.Log("possible bug here -- add targets dont overwrite it?"); //TODO
+							Debug.Log("possible bug here -- add targets dont overwrite it?"); //TODO possible bug here -- add targets dont overwrite it?
                             targets = this.m_pPhysics.GetEntitiesInRadius(p.Value, radius);
                         }
                     }

@@ -113,7 +113,7 @@ public class CastEffect
 
         this.m_pOrigin = fromEntity;
 
-        this.m_isAoeEffect = (bool)json["aoeRadius"];
+        this.m_isAoeEffect = (bool?)json["aoeRadius"] ?? false;
         this.m_damageType = (string)json["damageType"] ?? ""; //ex: fire
         this.m_targetStat = (string)json["targetStat"] ?? ""; //ex: hp_curr
 
