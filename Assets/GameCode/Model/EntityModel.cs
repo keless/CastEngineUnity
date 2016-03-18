@@ -21,6 +21,8 @@ public class EntityModel : ICastEntity, IEventBus
 
     public EntityModel(string name)
     {
+        Debug.Log("creating EntityModel(" + name + ")");
+
         eventBus.verbose = false;
 
         m_name = name;
@@ -51,12 +53,21 @@ public class EntityModel : ICastEntity, IEventBus
 
     }
 
-    public void Destroy()
-    {
-        eventBus.Destroy();
-    }
-
     public GameObject gameObject { get; set; }
+
+	bool _destroyed = false;
+	~EntityModel() 
+	{
+		if (!_destroyed) {
+			Debug.LogError ("EntityModel destructor called before Destroy(), someone forgot to clean up");
+			this.Destroy ();
+		}
+	}
+	public void Destroy()
+	{
+		_destroyed = true;
+		eventBus.Destroy();
+	}
 
     public string getName()
     {

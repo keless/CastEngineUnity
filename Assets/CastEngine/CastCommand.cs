@@ -79,6 +79,7 @@ public class CastCommandState
 
         var currTime = CastCommandTime.Get();
         this.m_timeStart = currTime;
+		Debug.Log ("_onCastComplete - time start = " + this.m_timeStart);
 
         //spawn effects
         var target = this.m_iOwner.getTarget();
@@ -165,6 +166,7 @@ public class CastCommandState
 
         var currTime = CastCommandTime.Get();
         this.m_timeStart = currTime;
+		Debug.Log ("_onCooldownComplete - time start = " + this.m_timeStart);
 
         this.m_state = CastCommandState.IDLE;
 
@@ -292,6 +294,7 @@ public class CastCommandState
         return this.m_pModel.descriptor[dataName] ?? new JObject();
     }
 
+	//TODO: should we have a 'requiresTarget(s)' parameter for commands?
     //bool
     public bool startCast()
     {
@@ -299,6 +302,7 @@ public class CastCommandState
 
         this.m_state = CastCommandState.CASTING;
         this.m_timeStart = CastCommandTime.Get();
+		Debug.Log ("startCast - time start = " + this.m_timeStart);
         this.m_channelTicks = 0;
 
         if (this.m_pModel.castTime == 0)

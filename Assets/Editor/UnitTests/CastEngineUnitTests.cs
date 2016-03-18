@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
 
@@ -38,11 +39,51 @@ public class CastEngineUnitTests {
         }
     }");
 
+	class TestCastPhysics : ICastPhysics
+	{
+		public Vector3? GetVecBetween(ICastEntity fromEntity, ICastEntity toEntity )
+		{
+			TestCastEntity f = fromEntity as TestCastEntity;
+			TestCastEntity t = toEntity as TestCastEntity;
+			if (f == null || t == null)
+				return null;
+			return t.pos - f.pos;
+		}
+			
+		// in: ICastEntity entity
+		// out: null or Vec2D pos
+		public Vector3? GetEntityPosition(ICastEntity entity )
+		{
+			if (entity == null)
+				return null;
+			TestCastEntity e = entity as TestCastEntity;
+			return e.pos;
+		}
+
+		// in: Vec2D p, float r, array[ICastEntity] ignoreEntities
+		// out: array<ICastEntity> entities
+		public List<ICastEntity> GetEntitiesInRadius(Vector3 p, float r, List<ICastEntity> ignoreEntities = null )
+		{
+			//CastWorldModel.Get(). //xxx todo
+			return new List<ICastEntity>();
+		}
+	}
+
+	protected void __cleanTestEnvironment__() 
+	{
+		CastWorldModel.Reset();
+		CastCommandTime.Set (0);
+
+		TestCastPhysics physics = new TestCastPhysics ();
+		CastWorldModel.Get ().setPhysicsInterface (physics);
+	}
+
     [Test]
     public void testEntityCreationAndDestruction()
     {
-        CastWorldModel world = CastWorldModel.Get();
+		__cleanTestEnvironment__ ();
 
+		CastWorldModel world = CastWorldModel.Get ();
         EntityModel entity = new EntityModel("model1");
 
         Assert.IsTrue(world.CountEntities() == 1);
@@ -55,7 +96,9 @@ public class CastEngineUnitTests {
     [Test]
     public void testEntityDeserialization()
     {
-        EntityModel entity = new EntityModel("model1");
+		__cleanTestEnvironment__ ();
+
+		EntityModel entity = new EntityModel("model1");
         entity.initFromJson(jsonEntitySerialization);
         Assert.IsTrue(entity.hp_base == (int)jsonEntitySerialization["stats"]["hp_base"]);
         Assert.IsTrue(entity.hp_curr == (int)jsonEntitySerialization["stats"]["hp_curr"]);
@@ -65,12 +108,87 @@ public class CastEngineUnitTests {
     [Test]
     public void testAbilityCreation()
     {
+		__cleanTestEnvironment__ ();
+
         CastCommandModel model = new CastCommandModel(jsonAbility1);
         CastCommandState instance = new CastCommandState(model, null);
 
         Assert.IsNotNull(instance);
     }
 
+
+
+	class TestCastEntity : ICastEntity
+	{
+		CastTarget castTarget = new CastTarget();
+		public Vector3 pos = new Vector3();
+
+		public TestCastEntity() {
+			CastWorldModel.Get().AddEntity(this);
+		}
+		public void Destroy() {
+			CastWorldModel.Get ().RemoveEntity (this);
+		}
+		public void setProperty(string propName, float value, CastEffect effect) {}
+		public void incProperty(string propName, float value, CastEffect effect) {}
+		public void startBuffProperty(string propName, float value, CastEffect effect) {}
+		public void endBuffProperty(string propName, float value, CastEffect effect) {}
+
+		// in: string propName
+		//float
+		public float getProperty(string propName) { return 0; }
+
+		public void testSetTarget( TestCastEntity target ) {
+			castTarget.addTargetEntity (target);
+		}
+		//CastTarget
+		public CastTarget getTarget() { return castTarget; }
+
+		// in: json reaction, CastEffect source
+		public void handleEffectReaction(JToken reaction, CastEffect source) {}
+
+		public void handleEffectEvent(string effectEventName, CastEffect source) {}
+
+		//effect is ARRIVING at this entity
+		public void applyEffect(CastEffect effect) {}
+		public void removeEffect(CastEffect effect) {}
+	}
+
     //todo: test ability use
+	[Test]
+	public void testAbilityUse() 
+	{
+		__cleanTestEnvironment__ ();
+
+		CastCommandScheduler scheduler = CastCommandScheduler.Get ();
+
+		CastCommandModel model = new CastCommandModel(jsonAbility1);
+
+		TestCastEntity entity = new TestCastEntity ();
+		TestCastEntity target = new TestCastEntity ();
+		entity.testSetTarget (target);
+		CastCommandState instance = new CastCommandState(model, entity);
+
+		Assert.IsFalse (instance.isCasting ());
+
+		Assert.IsTrue (instance.startCast ());
+
+		Assert.IsTrue (instance.isCasting ());
+
+		CastCommandTime.UpdateDelta (0.1);
+		scheduler.Update ();
+
+		Assert.IsTrue (instance.isCasting ());
+
+		CastCommandTime.UpdateDelta (1.1);
+		scheduler.Update ();
+
+		Assert.IsFalse (instance.isCasting ());
+		Assert.IsTrue (instance.isOnCooldown ());
+
+
+		entity.Destroy ();
+		target.Destroy ();
+	}
 
 }

@@ -20,13 +20,19 @@ public class CodeBridge : CommonMonoBehavior {
 	void Start () {
 
         m_gameWorld = new GameWorldModel(this);
-        CreatePlayerEntity(new Vector3(0, 0, 0));
-        CreateDummyEntity(new Vector3(10, 0, 0));
+        CreatePlayerEntity(new Vector3(0, 1, 0));
+        CreateDummyEntity(new Vector3(10, 1, 0));
     }
 	
 	// Update is called once per frame
 	void Update () {
 	}
+
+    void OnDestroy()
+    {
+        m_gameWorld.Destroy();
+        m_gameWorld = null;
+    }
 
     //public GameObject entityPrefab;
     void CreatePlayerEntity( Vector3 pos, Quaternion rot = new Quaternion() )
@@ -88,8 +94,18 @@ class GameWorldModel : ICastPhysics
         m_world.setPhysicsInterface(this);
     }
 
+    bool _destroyed = false;
     ~GameWorldModel()
     {
+        if(!_destroyed)
+        {
+            Destroy();
+        }
+    }
+
+    public void Destroy()
+    {
+        _destroyed = true;
         foreach (KeyValuePair<GameObject, EntityModel> gePair in m_objectEntityMap)
         {
             RemoveGameObjectEntityPair(gePair.Key, true);

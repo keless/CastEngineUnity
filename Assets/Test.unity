@@ -434,8 +434,10 @@ MonoBehaviour:
   yMargin: 1
   xSmooth: 8
   ySmooth: 8
-  maxXAndY: {x: 0, y: 0}
-  minXAndY: {x: 0, y: 0}
+  maxXAndY: {x: 10, y: 10}
+  minXAndY: {x: 2, y: 2}
+  lookAtTarget: 1
+  TargetTagName: Player
 --- !u!81 &911979157
 AudioListener:
   m_ObjectHideFlags: 0
