@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{ED8D856C-2A99-F2B6-48DE-37D3165178C7}</ProjectGuid>
+    <ProjectGuid>{B5C43B71-E4EC-22AE-0F1E-38308AE41C7A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -68,20 +68,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="CastEngineUnity.CSharp.Plugins.csproj">
-      <Project>{9E9D4000-F731-6CCC-BA80-1E0C361D2FD3}</Project>
-      <Name>CastEngineUnity.CSharp.Plugins</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\CastEngine\CastCommand.cs" />
     <Compile Include="Assets\CastEngine\CastEffect.cs" />
     <Compile Include="Assets\CastEngine\CastEntity.cs" />
     <Compile Include="Assets\CastEngine\CastTarget.cs" />
     <Compile Include="Assets\CastEngine\CastWorldModel.cs" />
+    <Compile Include="Assets\CodeBridge.cs" />
+    <Compile Include="Assets\Framework\UnityCameraFollow.cs" />
     <Compile Include="Assets\Framework\CommonMonoBehavior.cs" />
     <Compile Include="Assets\Framework\FileBrowser.cs" />
     <Compile Include="Assets\Framework\Framework.cs" />
+    <Compile Include="Assets\Framework\JsonUtility.cs" />
     <Compile Include="Assets\Framework\SimpleButtonEvent.cs" />
     <Compile Include="Assets\GameCode\Controller\PlayerEntityController.cs" />
     <Compile Include="Assets\GameCode\Model\EntityModel.cs" />

@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B8E42E98-48CA-EF08-73F4-F8CC8E890ED4}</ProjectGuid>
+    <ProjectGuid>{C358B78D-8D0C-2518-F923-1980390654DA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -98,12 +96,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="CastEngineUnity.CSharp.Plugins.csproj">
-      <Project>{9E9D4000-F731-6CCC-BA80-1E0C361D2FD3}</Project>
-      <Name>CastEngineUnity.CSharp.Plugins</Name>
-    </ProjectReference>
     <ProjectReference Include="CastEngineUnity.CSharp.csproj">
-      <Project>{ED8D856C-2A99-F2B6-48DE-37D3165178C7}</Project>
+      <Project>{B5C43B71-E4EC-22AE-0F1E-38308AE41C7A}</Project>
       <Name>CastEngineUnity.CSharp</Name>
     </ProjectReference>
   </ItemGroup>

@@ -67,6 +67,8 @@ public class CastEngineUnitTests {
     {
         CastCommandModel model = new CastCommandModel(jsonAbility1);
         CastCommandState instance = new CastCommandState(model, null);
+
+        Assert.IsNotNull(instance);
     }
 
     //todo: test ability use

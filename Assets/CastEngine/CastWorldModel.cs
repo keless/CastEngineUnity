@@ -27,22 +27,22 @@ public class CastCommandTime
 }
 
 
-public class ICastPhysics
+public interface ICastPhysics
 {
     // in: ICastEntity fromEntity, ICastEntity toEntity
     // out: null or Vec2D distVec
-    public Vector2? GetVecBetween(ICastEntity fromEntity, ICastEntity toEntity )
-    { return null; }
+    Vector3? GetVecBetween(ICastEntity fromEntity, ICastEntity toEntity);
+    //{ return null; }
 
     // in: ICastEntity entity
     // out: null or Vec2D pos
-    public Vector2? GetEntityPosition(ICastEntity entity )
-    { return null; }
+    Vector3? GetEntityPosition(ICastEntity entity);
+    //{ return null; }
 
     // in: Vec2D p, float r, array[ICastEntity] ignoreEntities
     // out: array<ICastEntity> entities
-    public List<ICastEntity> GetEntitiesInRadius(Vector2 p, float r, List<ICastEntity> ignoreEntities = null )
-    { return new List<ICastEntity>(); }
+    List<ICastEntity> GetEntitiesInRadius(Vector3 p, float r, List<ICastEntity> ignoreEntities = null);
+    //{ return new List<ICastEntity>(); }
 }
 
 

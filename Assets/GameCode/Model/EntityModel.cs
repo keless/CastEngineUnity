@@ -12,7 +12,7 @@ public class EntityModel : ICastEntity, IEventBus
 
     List<object> m_items;
     List<CastCommandState> m_abilities;
-	CastTarget m_abilityTargets;
+    CastTarget m_abilityTargets;
 
     List<CastEffect> m_negativeEffects;
     List<CastEffect> m_positiveEffects;
@@ -49,8 +49,14 @@ public class EntityModel : ICastEntity, IEventBus
         m_stats.Add("xp_level", 1);
         m_stats.Add("xp_worth", 10);
 
-        CastWorldModel.Get().AddEntity(this);
     }
+
+    public void Destroy()
+    {
+        eventBus.Destroy();
+    }
+
+    public GameObject gameObject { get; set; }
 
     public string getName()
     {
@@ -78,12 +84,6 @@ public class EntityModel : ICastEntity, IEventBus
         {
             m_stats["hp_base"] = value;
         }
-    }
-
-    public void Destroy()
-    {
-        CastWorldModel.Get().RemoveEntity(this);
-        eventBus.Destroy();
     }
 
     public JToken toJson()

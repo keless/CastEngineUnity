@@ -8,11 +8,14 @@ public class PlayerEntityController : CommonMonoBehavior {
 
     CastCommandModel m_testAbility;
 
-	// Use this for initialization
-	void Start () {
+    public static PlayerEntityController AddPlayerEntityController( GameObject go, EntityModel model  ) {
+        PlayerEntityController component = go.AddComponent<PlayerEntityController>();
+        component.m_model = model;
+        return component;
+    }
 
-        m_model = new EntityModel("bobzilla");
-        m_model.setProperty("hp_curr", m_model.hp_base / 2, null);
+    // Use this for initialization
+    void Start () {
 
         EntityView ev = GetComponent<EntityView>();
         ev.setModel(m_model);
