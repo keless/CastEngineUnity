@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B5C43B71-E4EC-22AE-0F1E-38308AE41C7A}</ProjectGuid>
+    <ProjectGuid>{26AA2021-4102-DD76-E139-D8284F769C86}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor-firstpass</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>EditorPlugins:7</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -52,14 +52,44 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.EditorTestsRunner">
+      <HintPath>Library\UnityAssemblies\UnityEditor.EditorTestsRunner.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.TreeEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WebGL.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.WebGL.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Assets\Plugins\Newtonsoft.Json.dll</HintPath>
@@ -70,68 +100,13 @@
       <Project>{22EE033D-6DDA-D992-58E0-177E284A085D}</Project>
       <Name>CastEngineUnity.CSharp.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="CastEngineUnity.CSharp.csproj">
+      <Project>{B5C43B71-E4EC-22AE-0F1E-38308AE41C7A}</Project>
+      <Name>CastEngineUnity.CSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CastEngine\CastCommand.cs" />
-    <Compile Include="Assets\CastEngine\CastEffect.cs" />
-    <Compile Include="Assets\CastEngine\CastEntity.cs" />
-    <Compile Include="Assets\CastEngine\CastTarget.cs" />
-    <Compile Include="Assets\CastEngine\CastWorldModel.cs" />
-    <Compile Include="Assets\GameCode\CodeBridge.cs" />
-    <Compile Include="Assets\GameCode\Controller\PlayerEntityController.cs" />
-    <Compile Include="Assets\GameCode\Model\EntityModel.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\AbstractTargetFollower.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\AutoCam.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\FreeLookCam.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\HandHeldCam.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\LookatTarget.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\PivotBasedCameraRig.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\ProtectCameraFromWallClip.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\TargetFieldOfView.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Characters\FirstPersonCharacter\Scripts\HeadBob.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Characters\FirstPersonCharacter\Scripts\MouseLook.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Characters\FirstPersonCharacter\Scripts\RigidbodyFirstPersonController.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Characters\RollerBall\Scripts\Ball.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Characters\RollerBall\Scripts\BallUserControl.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Characters\ThirdPersonCharacter\Scripts\AICharacterControl.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Characters\ThirdPersonCharacter\Scripts\ThirdPersonCharacter.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Characters\ThirdPersonCharacter\Scripts\ThirdPersonUserControl.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\InputAxisScrollbar.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\Joystick.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\MobileControlRig.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\MobileInput.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\StandaloneInput.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\ActivateTrigger.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\AutoMoveAndRotate.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\CameraRefocus.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\CurveControlledBob.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\DragRigidbody.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\DynamicShadowSettings.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\EventSystemChecker.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\FOVKick.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\FPSCounter.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\FollowTarget.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\ForcedReset.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\LerpControlledBob.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\ObjectResetter.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\ParticleSystemDestroyer.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\PlatformSpecificContent.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\SimpleActivatorMenu.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\SimpleMouseRotator.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\SmoothFollow.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\TimedObjectActivator.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\TimedObjectDestructor.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\WaypointCircuit.cs" />
-    <Compile Include="Assets\Imports\Standard Assets\Utility\WaypointProgressTracker.cs" />
-    <Compile Include="Assets\Prefabs\hpBar\BillboardHPBar.cs" />
+    <Compile Include="Assets\Plugins\JSON\Editor\JSONChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Imports\Standard Assets\Cameras\CameraGuidelines.txt" />

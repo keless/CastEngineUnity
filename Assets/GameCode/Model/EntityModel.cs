@@ -10,7 +10,7 @@ public class EntityModel : ICastEntity, IEventBus
 
     Dictionary<string, int> m_stats;
 
-    List<object> m_items;
+    //todo List<object> m_items;
     List<CastCommandState> m_abilities;
     CastTarget m_abilityTargets;
 
@@ -26,7 +26,6 @@ public class EntityModel : ICastEntity, IEventBus
         eventBus.verbose = false;
 
         m_name = name;
-        m_items = new List<object>();
         m_abilities = new List<CastCommandState>();
         m_abilityTargets = new CastTarget();
 

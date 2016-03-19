@@ -15,11 +15,14 @@ public class BillboardHPBar : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        //Debug.Assert(healthProvider != null);
-        hpValueProvider = healthProvider.GetComponent<IHitpointValueProvider>();
         initialWidth = this.transform.localScale.x;
 	}
 	
+    void OnEnable()
+    {
+        hpValueProvider = healthProvider.GetComponent<IHitpointValueProvider>();
+    }
+
 	// Update is called once per frame
 	void Update () {
         Camera cam = Camera.main;

@@ -21,8 +21,8 @@ public class CommonMonoBehavior : MonoBehaviour {
         _listenersToCleanUp.Add(new ListenerCleanup(eventBus, eventName, eventHandler));
         EventBus.Get(eventBus).addListener(eventName, eventHandler);
     }
-	
-	public void OnDestroy ()
+
+    protected void OnDestroy ()
     {
 	    foreach( ListenerCleanup listener in _listenersToCleanUp)
         {

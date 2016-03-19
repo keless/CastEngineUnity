@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9E9D4000-F731-6CCC-BA80-1E0C361D2FD3}</ProjectGuid>
+    <ProjectGuid>{22EE033D-6DDA-D992-58E0-177E284A085D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -66,15 +66,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\JsonUtility.cs" />
+    <Compile Include="Assets\Plugins\Framework\CommonMonoBehavior.cs" />
+    <Compile Include="Assets\Plugins\Framework\FileBrowser.cs" />
+    <Compile Include="Assets\Plugins\Framework\Framework.cs" />
+    <Compile Include="Assets\Plugins\Framework\JsonUtility.cs" />
+    <Compile Include="Assets\Plugins\Framework\LookAtTarget.cs" />
+    <Compile Include="Assets\Plugins\Framework\SimpleButtonEvent.cs" />
+    <Compile Include="Assets\Plugins\Framework\UnityCameraFollow.cs" />
+    <Compile Include="Assets\Plugins\JSON\JSONObject.cs" />
+    <Compile Include="Assets\Plugins\JSON\JSONTemplates.cs" />
+    <Compile Include="Assets\Plugins\JSON\VectorTemplates.cs" />
+    <Compile Include="Assets\Plugins\jsonLibraryRecipies.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Imports\JSON\readme.txt" />
     <None Include="Assets\Imports\Standard Assets\Cameras\CameraGuidelines.txt" />
     <None Include="Assets\Imports\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\Imports\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
     <None Include="Assets\Imports\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
     <None Include="Assets\Imports\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
+    <None Include="Assets\Plugins\JSON\readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

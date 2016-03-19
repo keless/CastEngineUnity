@@ -2,7 +2,8 @@
 using System.Collections;
 using Newtonsoft.Json.Linq;
 
-public class PlayerEntityController : CommonMonoBehavior {
+public class PlayerEntityController : CommonMonoBehavior, IHitpointValueProvider
+{
 
     EntityModel m_model;
 
@@ -16,9 +17,6 @@ public class PlayerEntityController : CommonMonoBehavior {
 
     // Use this for initialization
     void Start () {
-
-        EntityView ev = GetComponent<EntityView>();
-        ev.setModel(m_model);
 
         //create temp ability
         string strJson = @"{
@@ -75,5 +73,15 @@ public class PlayerEntityController : CommonMonoBehavior {
             Debug.Log("ability " + (abilityIdx + 1) + " has no targets in range");
             return;
         }
+    }
+
+    // IHitpointValueProvider
+    public int getHPCurr()
+    {
+        return m_model.hp_curr;
+    }
+    public int getHPMax()
+    {
+        return m_model.hp_base;
     }
 }

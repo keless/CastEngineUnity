@@ -28,8 +28,12 @@ public class CodeBridge : CommonMonoBehavior {
 	void Update () {
 	}
 
-    void OnDestroy()
+    new void OnDestroy()
     {
+        Debug.Log("CodeBridge: OnDestroy()");
+
+        base.OnDestroy();
+
         m_gameWorld.Destroy();
         m_gameWorld = null;
     }
@@ -45,8 +49,6 @@ public class CodeBridge : CommonMonoBehavior {
         GameObject go = (GameObject)Instantiate(entityPre, pos, rot);
         go.SetActive(false);
         go.tag = "Player";
-        go.AddComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>();
-        go.AddComponent<EntityView>();
 
         //PlayerEntityController peCtrl = go.AddComponent<PlayerEntityController>();
         EntityModel model = new EntityModel("player");
