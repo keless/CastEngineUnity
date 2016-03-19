@@ -46,7 +46,6 @@ public class CodeBridge : CommonMonoBehavior {
         go.SetActive(false);
         go.tag = "Player";
         go.AddComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>();
-        go.AddComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>();
         go.AddComponent<EntityView>();
 
         //PlayerEntityController peCtrl = go.AddComponent<PlayerEntityController>();
