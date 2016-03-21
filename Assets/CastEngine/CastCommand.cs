@@ -520,7 +520,8 @@ public class CastCommandScheduler
 
         var removeList = new List<double>();
 
-		foreach (double time in this.m_schedules.Keys)
+        var keys = this.m_schedules.Keys;
+        foreach (double time in keys)
         {
             if (time <= ct)
             {
