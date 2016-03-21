@@ -64,7 +64,8 @@ public class EntityModel : ICastEntity, IEventBus
 	}
 	public void Destroy()
 	{
-		_destroyed = true;
+        Debug.Log("destroying EntityModel(" + m_name + ")");
+        _destroyed = true;
 		eventBus.Destroy();
 	}
 

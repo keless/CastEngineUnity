@@ -86,11 +86,17 @@ public class CastEngineUnitTests {
 		CastWorldModel world = CastWorldModel.Get ();
         EntityModel entity = new EntityModel("model1");
 
+        Assert.IsTrue(world.CountEntities() == 0);
+
+        world.AddEntity(entity);
+
         Assert.IsTrue(world.CountEntities() == 1);
 
-        entity.Destroy();
+        world.RemoveEntity(entity);
 
         Assert.IsTrue(world.CountEntities() == 0);
+
+        entity.Destroy();
     }
 
     [Test]
@@ -98,7 +104,7 @@ public class CastEngineUnitTests {
     {
 		__cleanTestEnvironment__ ();
 
-		EntityModel entity = new EntityModel("model1");
+		EntityModel entity = new EntityModel("model2");
         entity.initFromJson(jsonEntitySerialization);
         Assert.IsTrue(entity.hp_base == (int)jsonEntitySerialization["stats"]["hp_base"]);
         Assert.IsTrue(entity.hp_curr == (int)jsonEntitySerialization["stats"]["hp_curr"]);
@@ -186,8 +192,19 @@ public class CastEngineUnitTests {
 		Assert.IsFalse (instance.isCasting ());
 		Assert.IsTrue (instance.isOnCooldown ());
 
+        CastCommandTime.UpdateDelta(0.1);
+        scheduler.Update();
 
-		entity.Destroy ();
+        Assert.IsFalse(instance.isIdle());
+        Assert.IsTrue(instance.isOnCooldown());
+
+        CastCommandTime.UpdateDelta(3.1);
+        scheduler.Update();
+
+        Assert.IsTrue(instance.isIdle());
+        Assert.IsFalse(instance.isOnCooldown());
+
+        entity.Destroy ();
 		target.Destroy ();
 	}
 
