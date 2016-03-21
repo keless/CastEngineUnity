@@ -27,7 +27,7 @@ public class LookAtTarget : MonoBehaviour {
             }
         }
 
-        if(target)
+        if(target != null)
         {
             transform.LookAt(target.position + offset);
         }

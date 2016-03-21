@@ -62,6 +62,9 @@ public class CodeBridge : CommonMonoBehavior {
         m_playerEntity.setProperty("hp_curr", m_playerEntity.hp_base / 2, null);
 
         go.SetActive(true);
+
+        UnityCameraFollow ucf = GameObject.FindObjectOfType<UnityCameraFollow>() as UnityCameraFollow;
+        ucf.target = model.gameObject.transform.FindChild("OTSTarget");
         //todo: set public members of added components so they work
     }
 
