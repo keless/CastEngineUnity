@@ -80,7 +80,7 @@ public class CastTarget
                     if (!foundTarget)
                     {
                         ICastEntity to = this.m_entityList[i];
-                        Vector2? distVec = world.getPhysicsInterface().GetVecBetween(fromEntity, to);
+                        Vector3? distVec = world.getPhysicsInterface().GetVecBetween(fromEntity, to);
 
                         if (distVec.HasValue && distVec.Value.sqrMagnitude <= rangeSq)
                         {
@@ -94,6 +94,7 @@ public class CastTarget
             return foundTarget;
         }
         else {
+            Debug.LogWarning("todo: need to implement physics based targeting");
             return true; //TODO: physics targeting (aka skill shots)
         }
     }

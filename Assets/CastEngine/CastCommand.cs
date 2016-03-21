@@ -479,12 +479,22 @@ public class CastCommandScheduler
     {
         return CastCommandScheduler.instance;
     }
+    public static void Reset()
+    {
+        instance.Destroy();
+        instance = new CastCommandScheduler();
+    }
 
     Dictionary<double, List<ScheduleTask>> m_schedules = new Dictionary<double, List<ScheduleTask>>();
     Dictionary<ScheduleTask, double> m_entries = new Dictionary<ScheduleTask, double>();
     double lastUpdate = 0;
 
     public CastCommandScheduler()
+    {
+
+    }
+
+    void Destroy()
     {
 
     }

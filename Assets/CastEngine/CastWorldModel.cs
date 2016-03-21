@@ -77,18 +77,21 @@ public class CastWorldModel
     {
         return CastWorldModel.instance;
     }
-
-	#if UNITY_EDITOR
 	public static void Reset() {
+        instance.Destroy();
 		instance = new CastWorldModel ();
 	}
-	#endif
 
     Dictionary<ICastEntity, ICastEntity> m_allEntities = new Dictionary<ICastEntity, ICastEntity>();
     List<CastEffectPath> m_effectsInTransit = new List<CastEffectPath>();
     ICastPhysics m_pPhysics = null;
 
     CastWorldModel()
+    {
+
+    }
+
+    void Destroy()
     {
 
     }
