@@ -359,12 +359,9 @@ public class CastCommandState
         else if (this.m_state == CastCommandState.COOLDOWN)
         {
             if (delta >= this.m_pModel.cooldownTime)
-            { //TODO: ahndle cooldown redux
+            { //TODO: handle cooldown redux
               //cancel callback
                 this._onCooldownComplete();
-            }
-            else {
-                Debug.LogError("shouldnt happen, cooldown time");
             }
         }
     }
@@ -484,6 +481,7 @@ public class CastCommandScheduler
     }
 
     Dictionary<double, List<ScheduleTask>> m_schedules = new Dictionary<double, List<ScheduleTask>>();
+    Dictionary<ScheduleTask, double> m_entries = new Dictionary<ScheduleTask, double>();
     double lastUpdate = 0;
 
     public CastCommandScheduler()
@@ -495,6 +493,17 @@ public class CastCommandScheduler
     {
         var ct = CastCommandTime.Get();
         var time = ct + dt;
+
+        if (m_entries.ContainsKey(callback))
+        {
+            //Debug.LogError("already have schedule pending for callback");
+            if (time > m_entries[callback])
+                m_entries[callback] = time;
+        }
+        else {
+            m_entries.Add(callback, time);
+        }
+
         if (this.m_schedules.ContainsKey(time))
         {
             this.m_schedules[time].Add(callback);
@@ -504,29 +513,44 @@ public class CastCommandScheduler
             newList.Add(callback);
             this.m_schedules.Add(time, newList);
         }
+        
     }
 
     public void unscheduleSelector(ScheduleTask callback)
     {
         //todo?
         Debug.Log("todo: unschedule selector");
+        if(m_entries.ContainsKey(callback))
+        {
+            
+            var time = m_entries[callback];
+            m_schedules[time].Remove(callback);
+            
+            Debug.Log("remove callback at time " + time);
+
+            if( time == m_entries[callback])
+                m_entries.Remove(callback);
+        }
     }
 
+    List<double> removeList = new List<double>();
     public void Update()
     {
         var ct = CastCommandTime.Get();
         if (ct == this.lastUpdate) return; //dont replay updates if time hasnt progressed
         this.lastUpdate = ct;
 
-        var removeList = new List<double>();
+        removeList.Clear();
 
-        var keys = this.m_schedules.Keys;
+        double[] keys = new double[m_schedules.Keys.Count];
+        m_schedules.Keys.CopyTo(keys, 0);
         foreach (double time in keys)
         {
             if (time <= ct)
             {
                 removeList.Add(time);
-                foreach (ScheduleTask callback in this.m_schedules[time])
+                List<ScheduleTask> callList = this.m_schedules[time];
+                foreach (ScheduleTask callback in callList)
                 {
                     callback();
                 }
@@ -535,7 +559,16 @@ public class CastCommandScheduler
 
         for (var i = 0; i < removeList.Count; i++)
         {
-            this.m_schedules.Remove(removeList[i]);
+            var removeTimeEntry = removeList[i];
+            foreach ( var callback in m_schedules[removeTimeEntry])
+            {
+                if(m_entries[callback] == removeTimeEntry)
+                {
+                    m_entries.Remove(callback);
+                }
+            }
+
+            m_schedules.Remove(removeList[i]);
         }
     }
 }
