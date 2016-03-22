@@ -24,6 +24,22 @@ public class CastEngineUnitTests {
 		        ]
 	        }");
 
+    JToken jsonAbility2 = JToken.Parse(@"{
+                ""name"": ""Heal"",
+		        ""castTime"": 1.15,
+		        ""cooldownTime"": 1.85,
+		        ""range"": 500,
+		        ""effectsOnCast"": [
+				        {
+						        ""effectType"": ""heal"",
+						        ""targetStat"": ""hp_curr"",
+						        ""valueBase"": 10,
+						        ""valueStat"": ""int"",
+						        ""valueMultiplier"": 2
+                        }
+		        ]
+	        }");
+
     JToken jsonEntitySerialization = JToken.Parse(@"{
         ""name"":""bob"",
         ""stats"":{
@@ -213,7 +229,7 @@ public class CastEngineUnitTests {
 	}
 
     [Test]
-    public void testDamage()
+    public void testAbilityDamage()
     {
         __cleanTestEnvironment__ ();
 
@@ -241,6 +257,43 @@ public class CastEngineUnitTests {
         Assert.IsTrue(instance.isOnCooldown());
 
         Assert.IsFalse(target.hp_curr == 100);
+
+        world.RemoveEntity(target);
+
+        entity.Destroy();
+        target.Destroy();
+    }
+
+    [Test]
+    public void testAbilityHeal()
+    {
+        __cleanTestEnvironment__();
+
+        CastCommandScheduler scheduler = CastCommandScheduler.Get();
+        CastWorldModel world = CastWorldModel.Get();
+
+        TestCastEntity entity = new TestCastEntity();
+        EntityModel target = new EntityModel("targ1");
+        world.AddEntity(target);
+        entity.testSetTarget(target);
+
+        //Vector3? distVec = world.getPhysicsInterface().GetVecBetween(entity, target);
+        //float mag = distVec.Value.magnitude;
+
+        CastCommandModel model = new CastCommandModel(jsonAbility2);
+        CastCommandState instance = new CastCommandState(model, entity);
+
+        target.setProperty("hp_curr", 50, null);
+        Assert.IsTrue(target.hp_curr == 50);
+
+        Assert.IsTrue(instance.startCast());
+
+        CastCommandTime.UpdateDelta(1.2);
+        scheduler.Update();
+
+        Assert.IsTrue(instance.isOnCooldown());
+
+        Assert.IsTrue(target.hp_curr == 60);
 
         world.RemoveEntity(target);
 
