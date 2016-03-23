@@ -241,9 +241,6 @@ public class CastEngineUnitTests {
         world.AddEntity(target);
         entity.testSetTarget(target);
 
-        //Vector3? distVec = world.getPhysicsInterface().GetVecBetween(entity, target);
-        //float mag = distVec.Value.magnitude;
-
         CastCommandModel model = new CastCommandModel(jsonAbility1);
         CastCommandState instance = new CastCommandState(model, entity);
 
@@ -276,9 +273,6 @@ public class CastEngineUnitTests {
         EntityModel target = new EntityModel("targ1");
         world.AddEntity(target);
         entity.testSetTarget(target);
-
-        //Vector3? distVec = world.getPhysicsInterface().GetVecBetween(entity, target);
-        //float mag = distVec.Value.magnitude;
 
         CastCommandModel model = new CastCommandModel(jsonAbility2);
         CastCommandState instance = new CastCommandState(model, entity);
