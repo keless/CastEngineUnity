@@ -90,6 +90,12 @@ class GameWorldModel : ICastPhysics
                 continue;
             }
             EntityModel model = m_objectEntityMap[go];
+
+            if( ignoreEntities != null && ignoreEntities.Contains(model))
+            {
+                continue;
+            }
+
             found.Add(model);
         }
         return found;
