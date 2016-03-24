@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -81,7 +79,9 @@
     <Compile Include="Assets\CastEngine\CastWorldModel.cs" />
     <Compile Include="Assets\GameCode\CodeBridge.cs" />
     <Compile Include="Assets\GameCode\Controller\PlayerEntityController.cs" />
+    <Compile Include="Assets\GameCode\Controller\TargetPanelViewController.cs" />
     <Compile Include="Assets\GameCode\Events\GameEvents.cs" />
+    <Compile Include="Assets\GameCode\InputEventBridge.cs" />
     <Compile Include="Assets\GameCode\Model\EntityModel.cs" />
     <Compile Include="Assets\GameCode\Model\GameWorldModel.cs" />
     <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\AbstractTargetFollower.cs" />
@@ -136,7 +136,6 @@
     <Compile Include="Assets\Imports\Standard Assets\Utility\WaypointCircuit.cs" />
     <Compile Include="Assets\Imports\Standard Assets\Utility\WaypointProgressTracker.cs" />
     <Compile Include="Assets\Prefabs\hpBar\BillboardHPBar.cs" />
-    <Compile Include="Assets\GameCode\Controller\TargetPanelViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Imports\Standard Assets\Cameras\CameraGuidelines.txt" />
@@ -146,6 +145,5 @@
     <None Include="Assets\Imports\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
     <None Include="Assets\Plugins\JSON\readme.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

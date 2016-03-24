@@ -53,6 +53,7 @@ public class EntityModel : ICastEntity, IEventBus
     }
 
     public GameObject gameObject { get; set; }
+    public Vector3 position { get { return gameObject.transform.position; } }
 
 	bool _destroyed = false;
 	~EntityModel() 
