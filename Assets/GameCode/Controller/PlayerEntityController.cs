@@ -2,7 +2,7 @@
 using System.Collections;
 using Newtonsoft.Json.Linq;
 
-public class PlayerEntityController : CommonMonoBehavior, IHitpointValueProvider
+public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvider
 {
 
     EntityModel m_model;

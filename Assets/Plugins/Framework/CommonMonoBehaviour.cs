@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CommonMonoBehavior : MonoBehaviour {
+public class CommonMonoBehaviour : MonoBehaviour {
 
     protected class ListenerCleanup
     {
