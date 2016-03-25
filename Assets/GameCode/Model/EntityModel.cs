@@ -3,7 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
-public class EntityModel : ICastEntity, IEventBus
+public interface IHitpointValueProvider
+{
+    int getHPCurr();
+    int getHPMax();
+}
+
+public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
 {
     EventBus eventBus = new EventBus("EntityModel");
     string m_name = "";
@@ -311,6 +317,17 @@ public class EntityModel : ICastEntity, IEventBus
                 Debug.LogWarning("unexpected cast effect type");
                 break;
         }
+    }
+
+    //IHitpointProvider
+    public int getHPCurr()
+    {
+        return this.hp_curr;
+    }
+
+    public int getHPMax()
+    {
+        return this.hp_base;
     }
 
     //IEntityBus

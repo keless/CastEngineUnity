@@ -2,23 +2,19 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class TargetPanelViewController : CommonMonoBehaviour {
+public class TargetPanelView : CommonMonoBehaviour {
 
     ICastEntity m_target = null;
-
-    Image bg;
+    Text txtTargetName;
 
 	// Use this for initialization
 	void Start () {
-        bg = GetComponent<Image>();
-        bg.enabled = false;
+
+        txtTargetName = gameObject.GetComponentInChildren<Text>(true);
 
         SetListener(PlayerTargetSelected.EvtName, onTargetSelected, "game");
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+        gameObject.SetActive(false);
 	}
 
     void onTargetSelected(EventObject e)
@@ -39,13 +35,14 @@ public class TargetPanelViewController : CommonMonoBehaviour {
         m_target = target;
         if (m_target != null)
         {
-            bg.enabled = true;
-            //todo: add target icon
+            gameObject.SetActive(true);
+
+            EntityModel model = target as EntityModel;
+            txtTargetName.text = model.getName();
         }
         else
         {
-            bg.enabled = false;
-            //todo: remove target icon
+            gameObject.SetActive(false);
         }
     }
 }

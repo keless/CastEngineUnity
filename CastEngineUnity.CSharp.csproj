@@ -79,11 +79,12 @@
     <Compile Include="Assets\CastEngine\CastWorldModel.cs" />
     <Compile Include="Assets\GameCode\CodeBridge.cs" />
     <Compile Include="Assets\GameCode\Controller\PlayerEntityController.cs" />
-    <Compile Include="Assets\GameCode\Controller\TargetPanelViewController.cs" />
     <Compile Include="Assets\GameCode\Events\GameEvents.cs" />
     <Compile Include="Assets\GameCode\InputEventBridge.cs" />
     <Compile Include="Assets\GameCode\Model\EntityModel.cs" />
     <Compile Include="Assets\GameCode\Model\GameWorldModel.cs" />
+    <Compile Include="Assets\GameCode\View\TargetPanelView.cs" />
+    <Compile Include="Assets\GameCode\View\UIHPBarView.cs" />
     <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\AbstractTargetFollower.cs" />
     <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\AutoCam.cs" />
     <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\FreeLookCam.cs" />
