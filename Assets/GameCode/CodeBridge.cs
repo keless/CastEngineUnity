@@ -48,7 +48,6 @@ public class CodeBridge : CommonMonoBehaviour {
         //PlayerEntityController
         GameObject entityPre = (GameObject)Resources.Load("GameEntity", typeof(GameObject));
         GameObject go = (GameObject)Instantiate(entityPre, pos, rot);
-        go.SetActive(false);
         go.tag = "Player";
 
         //PlayerEntityController peCtrl = go.AddComponent<PlayerEntityController>();
@@ -77,6 +76,8 @@ public class CodeBridge : CommonMonoBehaviour {
 
         EntityModel model = new EntityModel("dummy");
         m_gameWorld.AddGameObjectEntityPair(go, model);
+
+        go.SetActive(true);
     }
 
     public void DestroyGameObject ( GameObject go, float dt = 0.0f )

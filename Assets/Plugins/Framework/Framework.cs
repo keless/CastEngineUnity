@@ -58,7 +58,7 @@ public class EventBus : IEventBus
             _eventListeners.Add(eventName, new EventProxy());
         }
 
-        _eventListeners[eventName]._event += callbackFunction;
+        _eventListeners[eventName]._event += new Handler(callbackFunction);
     }
 
     public void removeListener(string eventName, Handler callbackFunction)

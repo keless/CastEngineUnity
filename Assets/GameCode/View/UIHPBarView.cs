@@ -11,7 +11,7 @@ public class UIHPBarView : CommonMonoBehaviour
 
     IHitpointValueProvider hpValueProvider;
 
-    void Start()
+    void Awake()
     {
         sliderBar = GetComponent<Slider>();
 

@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class BillboardHPBar : MonoBehaviour {
+public class BillboardHPBar : CommonMonoBehaviour {
 
     public GameObject healthProvider;
     public IHitpointValueProvider hpValueProvider;
@@ -15,7 +15,10 @@ public class BillboardHPBar : MonoBehaviour {
 	
     void OnEnable()
     {
-        hpValueProvider = healthProvider.GetComponent<IHitpointValueProvider>();
+        if(hpValueProvider == null)
+        {
+            hpValueProvider = healthProvider.GetComponent<IHitpointValueProvider>();
+        }
     }
 
 	// Update is called once per frame

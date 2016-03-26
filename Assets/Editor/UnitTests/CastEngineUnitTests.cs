@@ -294,4 +294,29 @@ public class CastEngineUnitTests {
         entity.Destroy();
         target.Destroy();
     }
+
+    private int mel_counter;
+    [Test]
+    public void multipleEventListeners()
+    {
+        mel_counter = 0;
+        EventBus bus = new EventBus("test");
+
+        bus.addListener("test", eventListener1);
+        bus.addListener("test", eventListener2);
+
+        bus.dispatch(new EventObject("test"));
+
+        Assert.IsTrue(mel_counter == 2);
+        Debug.Log("counter " + mel_counter);
+    }
+
+    public void eventListener1(EventObject o)
+    {
+        mel_counter++;
+    }
+    public void eventListener2(EventObject o)
+    {
+        mel_counter++;
+    }
 }

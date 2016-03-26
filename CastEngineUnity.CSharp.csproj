@@ -79,6 +79,7 @@
     <Compile Include="Assets\CastEngine\CastWorldModel.cs" />
     <Compile Include="Assets\GameCode\CodeBridge.cs" />
     <Compile Include="Assets\GameCode\Controller\PlayerEntityController.cs" />
+    <Compile Include="Assets\GameCode\Controller\TriggerHPBarOnTargeted.cs" />
     <Compile Include="Assets\GameCode\Events\GameEvents.cs" />
     <Compile Include="Assets\GameCode\InputEventBridge.cs" />
     <Compile Include="Assets\GameCode\Model\EntityModel.cs" />
