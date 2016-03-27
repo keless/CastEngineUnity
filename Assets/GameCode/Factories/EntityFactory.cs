@@ -18,6 +18,9 @@ public class EntityFactory : MonoBehaviour
         EntityModel model = new EntityModel("player");
         PlayerEntityController.AddPlayerEntityController(go, model);
 
+        EntityAnimationController animController = go.GetComponent<EntityAnimationController>();
+        animController.SetModel(model);
+
         go.GetComponentInChildren<BillboardHPBar>().hpValueProvider = model;
 
         //todo: em.initFromJson();

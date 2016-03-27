@@ -81,6 +81,7 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
         Debug.Log("start cast on ability " + abilityIdx);
 
         ability.startCast();
+        m_model.dispatch(new TriggerAnimEvent("someAnimation"));
     }
 
     void doPlayerTargetChange()
