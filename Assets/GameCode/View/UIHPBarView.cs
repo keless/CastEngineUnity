@@ -17,19 +17,17 @@ public class UIHPBarView : CommonMonoBehaviour
 
         gameObject.SetActive(false);
 
-        SetListener(PlayerTargetSelected.EvtName, onTargetSelected, "game");
+        SetListener(PlayerTargetSelected.EvtName, this.onPlayerTargetSelected, "game");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Transform healthBar = this.transform.GetChild(0);
-        //todo: HP percentage
         float percent = hpValueProvider.getHPCurr() / (float)hpValueProvider.getHPMax();
         sliderBar.value = sliderBar.maxValue * percent;
     }
 
-    void onTargetSelected(EventObject e)
+    void onPlayerTargetSelected(EventObject e)
     {
         PlayerTargetSelected evt = e as PlayerTargetSelected;
 

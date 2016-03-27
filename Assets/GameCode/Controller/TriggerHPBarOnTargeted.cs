@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(BillboardHPBar))]
+//[RequireComponent(typeof(BillboardHPBar))]
 public class TriggerHPBarOnTargeted : CommonMonoBehaviour {
 
     BillboardHPBar hpBar;
@@ -13,7 +13,7 @@ public class TriggerHPBarOnTargeted : CommonMonoBehaviour {
         entityObject = transform.parent.gameObject;
         Debug.Assert(entityObject);
 
-        SetListener(PlayerTargetSelected.EvtName, onPlayerTargetSelected, "game");
+        SetListener(PlayerTargetSelected.EvtName, this.onPlayerTargetSelected, "game");
     }
 
     void onPlayerTargetSelected(EventObject e)
@@ -21,7 +21,7 @@ public class TriggerHPBarOnTargeted : CommonMonoBehaviour {
         PlayerTargetSelected evt = e as PlayerTargetSelected;
         EntityModel entity = evt.target as EntityModel;
 
-        if(entity.gameObject == entityObject)
+        if(entity != null && entity.gameObject == entityObject)
         {
             //we were chosen, yay!
             hpBar.hpValueProvider = entity;
@@ -29,6 +29,8 @@ public class TriggerHPBarOnTargeted : CommonMonoBehaviour {
         }
         else
         {
+            Debug.LogWarning("test: am i hiding hpbar correctly?");
+
             //im going to my dark place now
             hpBar.gameObject.SetActive(false);
         }

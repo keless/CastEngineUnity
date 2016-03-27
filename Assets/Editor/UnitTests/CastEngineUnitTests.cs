@@ -295,7 +295,7 @@ public class CastEngineUnitTests {
         target.Destroy();
     }
 
-    private int mel_counter;
+    protected int mel_counter;
     [Test]
     public void multipleEventListeners()
     {
@@ -305,18 +305,47 @@ public class CastEngineUnitTests {
         bus.addListener("test", eventListener1);
         bus.addListener("test", eventListener2);
 
+        mel_class_listener test = new mel_class_listener(bus, this);
+
+
         bus.dispatch(new EventObject("test"));
 
-        Assert.IsTrue(mel_counter == 2);
+        test.Destroy();
+
+        Assert.IsTrue(mel_counter == 3);
         Debug.Log("counter " + mel_counter);
     }
 
     public void eventListener1(EventObject o)
     {
+        //Debug.Log("el1");
         mel_counter++;
     }
     public void eventListener2(EventObject o)
     {
+        //Debug.Log("el2");
         mel_counter++;
+    }
+
+    public class mel_class_listener
+    {
+        EventBus bus;
+        CastEngineUnitTests test;
+        public mel_class_listener(EventBus eb, CastEngineUnitTests ceut)
+        {
+            bus = eb;
+            bus.addListener("test", onTest);
+            test = ceut;
+        }
+        public void onTest(EventObject e)
+        {
+            test.mel_counter++;
+        }
+        public void Destroy()
+        {
+            bus.removeListener("test", onTest);
+            bus = null;
+            test = null;
+        }
     }
 }

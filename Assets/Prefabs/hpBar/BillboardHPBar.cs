@@ -4,7 +4,6 @@ using System.Collections;
 
 public class BillboardHPBar : CommonMonoBehaviour {
 
-    public GameObject healthProvider;
     public IHitpointValueProvider hpValueProvider;
     public float initialWidth; 
 
@@ -12,14 +11,6 @@ public class BillboardHPBar : CommonMonoBehaviour {
     void Start () {
         initialWidth = this.transform.localScale.x;
 	}
-	
-    void OnEnable()
-    {
-        if(hpValueProvider == null)
-        {
-            hpValueProvider = healthProvider.GetComponent<IHitpointValueProvider>();
-        }
-    }
 
 	// Update is called once per frame
 	void Update () {

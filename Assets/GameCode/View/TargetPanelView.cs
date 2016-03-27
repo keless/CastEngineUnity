@@ -8,8 +8,7 @@ public class TargetPanelView : CommonMonoBehaviour {
     Text txtTargetName;
 
 	// Use this for initialization
-	void Start () {
-
+	void Awake() {
         txtTargetName = gameObject.GetComponentInChildren<Text>(true);
 
         SetListener(PlayerTargetSelected.EvtName, onTargetSelected, "game");

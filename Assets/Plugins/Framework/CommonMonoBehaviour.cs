@@ -8,15 +8,15 @@ public class CommonMonoBehaviour : MonoBehaviour {
     {
         public string _eventBus;
         public string _eventName;
-        public EventBus.Handler _eventHandler;
-        public ListenerCleanup(string eventBus, string eventName, EventBus.Handler eventHandler)
+        public EventBusDelegate _eventHandler;
+        public ListenerCleanup(string eventBus, string eventName, EventBusDelegate eventHandler)
         {
             _eventBus = eventBus; _eventName = eventName; _eventHandler = eventHandler;
         }
     }
     protected List<ListenerCleanup> _listenersToCleanUp = new List<ListenerCleanup>();
 
-    protected void SetListener(string eventName, EventBus.Handler eventHandler, string eventBus = "ui")
+    protected void SetListener(string eventName, EventBusDelegate eventHandler, string eventBus = "ui")
     {
         _listenersToCleanUp.Add(new ListenerCleanup(eventBus, eventName, eventHandler));
         EventBus.Get(eventBus).addListener(eventName, eventHandler);

@@ -20,8 +20,10 @@ public class CodeBridge : CommonMonoBehaviour {
 	void Start () {
 
         m_gameWorld = new GameWorldModel(this);
-        CreatePlayerEntity(new Vector3(0, 1, 0));
-        CreateDummyEntity(new Vector3(10, 1, 0));
+        m_playerEntity = EntityFactory.CreatePlayer(m_gameWorld, new Vector3(0, 1, 0));
+        m_playerEntity.setProperty("hp_curr", m_playerEntity.hp_base / 2, null);
+
+        EntityFactory.CreateDummy(m_gameWorld, new Vector3(10, 1, 0));
     }
 	
 	// Update is called once per frame
@@ -37,47 +39,6 @@ public class CodeBridge : CommonMonoBehaviour {
 
         m_gameWorld.Destroy();
         m_gameWorld = null;
-    }
-
-    //public GameObject entityPrefab;
-    void CreatePlayerEntity( Vector3 pos, Quaternion rot = new Quaternion() )
-    {
-        //ThirdPersonUserControl
-        //ThirdPersonCharacter
-        //EntityView
-        //PlayerEntityController
-        GameObject entityPre = (GameObject)Resources.Load("GameEntity", typeof(GameObject));
-        GameObject go = (GameObject)Instantiate(entityPre, pos, rot);
-        go.tag = "Player";
-
-        //PlayerEntityController peCtrl = go.AddComponent<PlayerEntityController>();
-        EntityModel model = new EntityModel("player");
-        PlayerEntityController.AddPlayerEntityController(go, model);
-
-        
-        //todo: em.initFromJson();
-        m_gameWorld.AddGameObjectEntityPair(go, model);
-        m_playerEntity = model;
-
-        m_playerEntity.setProperty("hp_curr", m_playerEntity.hp_base / 2, null);
-
-        go.SetActive(true);
-
-        UnityCameraFollow ucf = GameObject.FindObjectOfType<UnityCameraFollow>() as UnityCameraFollow;
-        ucf.target = model.gameObject.transform.FindChild("OTSTarget");
-        //todo: set public members of added components so they work
-    }
-
-    //public GameObject dummyPrefab;
-    void CreateDummyEntity( Vector3 pos, Quaternion rot = new Quaternion())
-    {
-        GameObject dummyPre = (GameObject)Resources.Load("DummyEntity", typeof(GameObject));
-        GameObject go = (GameObject)Instantiate(dummyPre, pos, rot);
-
-        EntityModel model = new EntityModel("dummy");
-        m_gameWorld.AddGameObjectEntityPair(go, model);
-
-        go.SetActive(true);
     }
 
     public void DestroyGameObject ( GameObject go, float dt = 0.0f )

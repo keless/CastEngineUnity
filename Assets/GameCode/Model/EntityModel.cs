@@ -331,11 +331,11 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
     }
 
     //IEntityBus
-    public void addListener(string eventName, EventBus.Handler callbackFunction)
+    public void addListener(string eventName, EventBusDelegate callbackFunction)
     {
         eventBus.addListener(eventName, callbackFunction);
     }
-    public void removeListener(string eventName, EventBus.Handler callbackFunction)
+    public void removeListener(string eventName, EventBusDelegate callbackFunction)
     {
         eventBus.removeListener(eventName, callbackFunction);
     }

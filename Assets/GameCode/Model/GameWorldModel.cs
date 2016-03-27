@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class GameWorldModel : ICastPhysics
+public class GameWorldModel : ICastPhysics
 {
     CastWorldModel m_world;
     Dictionary<GameObject, EntityModel> m_objectEntityMap;
