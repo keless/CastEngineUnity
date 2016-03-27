@@ -29,8 +29,6 @@ public class TriggerHPBarOnTargeted : CommonMonoBehaviour {
         }
         else
         {
-            Debug.LogWarning("test: am i hiding hpbar correctly?");
-
             //im going to my dark place now
             hpBar.gameObject.SetActive(false);
         }

@@ -86,7 +86,7 @@ public class GameWorldModel : ICastPhysics
             GameObject go = col.gameObject;
             if (!m_objectEntityMap.ContainsKey(go))
             {
-                Debug.LogWarning("todo: sphere search, need to filter on EntityModel objects only?");
+                //TODO: optimize: sphere search, need to filter on EntityModel objects only?
                 continue;
             }
             EntityModel model = m_objectEntityMap[go];

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 public class EntityFactory : MonoBehaviour
 {
@@ -21,6 +22,31 @@ public class EntityFactory : MonoBehaviour
 
         //todo: em.initFromJson();
         world.AddGameObjectEntityPair(go, model);
+
+        //create temp ability
+        string strJson = @"{
+                ""name"": ""Attack"",
+		        ""castTime"": 0.45,
+		        ""cooldownTime"": 0.85,
+		        ""range"": 5,
+		        ""effectsOnCast"": [
+				        {
+						        ""effectType"": ""damage"",
+						        ""damageType"": ""piercing"",
+						        ""targetStat"": ""hp_curr"",
+						        ""valueBase"": 10,
+						        ""valueStat"": ""str"",
+						        ""valueMultiplier"": 2,
+						        ""react"": ""shake""
+                        }
+		        ]
+	        }";
+        JToken abilityJson = JToken.Parse(strJson);
+        CastCommandModel ability1 = new CastCommandModel(abilityJson);
+
+        // add to model
+        CastCommandState ability = new CastCommandState(ability1, model);
+        model.testAddAbility(ability);
 
 
         go.SetActive(true);

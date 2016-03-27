@@ -30,6 +30,10 @@ public class InputEventBridge : MonoBehaviour {
         {
             _checkKey((KeyCode)i);
         }
+        for (int i = (int)KeyCode.Alpha0; i <= (int)KeyCode.Alpha9; i++)
+        {
+            _checkKey((KeyCode)i);
+        }
     }
 
     void _checkMouseButton(int idx)

@@ -21,31 +21,6 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
     // Use this for initialization
     void Start () {
 
-        //create temp ability
-        string strJson = @"{
-                ""name"": ""Attack"",
-		        ""castTime"": 1.15,
-		        ""cooldownTime"": 1.85,
-		        ""range"": 5,
-		        ""effectsOnCast"": [
-				        {
-						        ""effectType"": ""damage"",
-						        ""damageType"": ""piercing"",
-						        ""targetStat"": ""hp_curr"",
-						        ""valueBase"": 2,
-						        ""valueStat"": ""str"",
-						        ""valueMultiplier"": 2,
-						        ""react"": ""shake""
-                        }
-		        ]
-	        }";
-        JToken abilityJson = JToken.Parse(strJson);
-        m_testAbility = new CastCommandModel(abilityJson);
-
-        // add to model
-        CastCommandState ability = new CastCommandState(m_testAbility, m_model);
-        m_model.testAddAbility(ability);
-
         SetListener("btnSkill1", onBtnSkill1);
         SetListener(KeyEvent.EvtName, onKeyEvent);
 	}
@@ -65,6 +40,15 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
             //player target change
             doPlayerTargetChange();
         }
+
+        if(evt.keyCode == KeyCode.Alpha1)
+        {
+            attemptAbility(0);
+        }
+        if (evt.keyCode == KeyCode.Alpha2)
+        {
+            attemptAbility(1);
+        }
     }
 
     void onBtnSkill1(EventObject e)
@@ -82,6 +66,10 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
         }
 
         CastCommandState ability = m_model.getAbilities()[abilityIdx];
+        if(ability == null)
+        {
+            return;
+        }
 
         CastTarget target = m_model.getTarget();
         if (!target.hasTargetsAtRangeFromEntity(ability.getRange(), m_model))
@@ -89,6 +77,10 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
             Debug.Log("ability " + (abilityIdx + 1) + " has no targets in range");
             return;
         }
+
+        Debug.Log("start cast on ability " + abilityIdx);
+
+        ability.startCast();
     }
 
     void doPlayerTargetChange()

@@ -28,13 +28,12 @@ public class CodeBridge : CommonMonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        CastCommandTime.UpdateDelta(Time.deltaTime);
+        CastCommandScheduler.Get().Update();
 	}
 
     new void OnDestroy()
     {
-        Debug.Log("CodeBridge: OnDestroy()");
-
         base.OnDestroy();
 
         m_gameWorld.Destroy();
