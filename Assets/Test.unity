@@ -1189,6 +1189,7 @@ GameObject:
   - 114: {fileID: 1375072008}
   - 114: {fileID: 1375072007}
   - 114: {fileID: 1375072006}
+  - 114: {fileID: 1375072010}
   m_Layer: 5
   m_Name: btnSkill2
   m_TagString: Untagged
@@ -1299,6 +1300,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1375072004}
+--- !u!114 &1375072010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1375072004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2b8680205a91d4d909e2b068f8e4c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityIndex: 1
 --- !u!1 &1510245827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,6 +1403,7 @@ GameObject:
   - 114: {fileID: 1673260745}
   - 114: {fileID: 1673260744}
   - 114: {fileID: 1673260743}
+  - 114: {fileID: 1673260747}
   m_Layer: 5
   m_Name: btnSkill1
   m_TagString: Untagged
@@ -1500,6 +1514,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1673260741}
+--- !u!114 &1673260747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1673260741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2b8680205a91d4d909e2b068f8e4c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityIndex: 0
 --- !u!1 &1714140480
 GameObject:
   m_ObjectHideFlags: 0

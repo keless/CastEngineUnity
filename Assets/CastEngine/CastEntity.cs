@@ -46,4 +46,9 @@ public interface ICastEntity
     //effect is ARRIVING at this entity
     void applyEffect(CastEffect effect);
     void removeEffect(CastEffect effect);
+
+    void onAbilityCastStart(CastCommandState ability);
+    void onAbilityChannelStart(CastCommandState ability);
+    void onAbilityCooldownStart(CastCommandState ability);
+    void onAbilityIdleStart(CastCommandState ability);
 }

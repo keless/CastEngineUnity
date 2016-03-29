@@ -178,7 +178,12 @@ public class CastEngineUnitTests {
 		//effect is ARRIVING at this entity
 		public void applyEffect(CastEffect effect) {}
 		public void removeEffect(CastEffect effect) {}
-	}
+
+        public void onAbilityCastStart(CastCommandState ability) { }
+        public void onAbilityChannelStart(CastCommandState ability) { }
+        public void onAbilityCooldownStart(CastCommandState ability) { }
+        public void onAbilityIdleStart(CastCommandState ability) { }
+    }
 
     //todo: test ability use
 	[Test]

@@ -319,6 +319,28 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
         }
     }
 
+    public void onAbilityCastStart(CastCommandState ability)
+    {
+        int index = m_abilities.IndexOf(ability);
+
+        this.dispatch(new EntityStartCast(index, ability.getCastPeriod(), CastCommandTime.Get()));
+    }
+    public void onAbilityChannelStart(CastCommandState ability)
+    {
+        int index = m_abilities.IndexOf(ability);
+        this.dispatch(new EntityStartChannel(index, ability.getChannelPeriod(), CastCommandTime.Get()));
+    }
+    public void onAbilityCooldownStart(CastCommandState ability)
+    {
+        int index = m_abilities.IndexOf(ability);
+        this.dispatch(new EntityStartCooldown(index, ability.getCooldownPeriod(), CastCommandTime.Get()));
+    }
+    public void onAbilityIdleStart(CastCommandState ability)
+    {
+        //int index = m_abilities.IndexOf(ability);
+        //do we need this?
+    }
+
     //IHitpointProvider
     public int getHPCurr()
     {

@@ -125,6 +125,8 @@ public class CastCommandState
     {
         this.m_state = CastCommandState.CHANNELING;
         this._scheduleCallback(this.m_pModel.channelFreq);
+
+        this.m_iOwner.onAbilityChannelStart(this);
     }
 
     protected void _onChannelComplete()
@@ -157,6 +159,8 @@ public class CastCommandState
     {
         this.m_state = CastCommandState.COOLDOWN;
         this._scheduleCallback(this.m_pModel.cooldownTime);
+
+        this.m_iOwner.onAbilityCooldownStart(this);
     }
 
 
@@ -207,6 +211,11 @@ public class CastCommandState
         return this.m_state == CastCommandState.CASTING;
     }
 
+    public float getCastPeriod()
+    {
+        return this.m_pModel.castTime;
+    }
+
     //float
     // 0 means 'not casting', 1.0 means 'cast complete'
     public float getCastPct()
@@ -230,6 +239,11 @@ public class CastCommandState
         return this.m_state == CastCommandState.CHANNELING;
     }
 
+    public float getChannelPeriod()
+    {
+        return this.m_pModel.channelTime;
+    }
+
     //float
     // 0 means 'not channeling' 1.0 means 'channel complete'
     public float getChannelPct()
@@ -251,6 +265,11 @@ public class CastCommandState
     public bool isOnCooldown()
     {
         return this.m_state == CastCommandState.COOLDOWN;
+    }
+
+    public float getCooldownPeriod()
+    {
+        return this.m_pModel.cooldownTime;
     }
 
     //float
@@ -314,6 +333,8 @@ public class CastCommandState
             //TODO: should we set castTime as delay instead of interval?
             this._scheduleCallback(this.m_pModel.castTime);
         }
+
+        this.m_iOwner.onAbilityCastStart(this);
 
         return true;
     }

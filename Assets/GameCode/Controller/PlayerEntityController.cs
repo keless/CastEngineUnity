@@ -14,7 +14,7 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
 
     public static PlayerEntityController AddPlayerEntityController( GameObject go, EntityModel model  ) {
         PlayerEntityController component = go.AddComponent<PlayerEntityController>();
-        component.m_model = model;
+        component.SetModel(model);
         return component;
     }
 
@@ -24,11 +24,51 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
         SetListener("btnSkill1", onBtnSkill1);
         SetListener(KeyEvent.EvtName, onKeyEvent);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    new void OnDestroy()
+    {
+        //clean up!
+        RemoveModel();
+    }
+
+    public void SetModel(EntityModel model)
+    {
+        RemoveModel();
+        m_model = model;
+        m_model.addListener(EntityStartCast.EvtName, onStartCast);
+        m_model.addListener(EntityStartCast.EvtName, onStartChannel);
+        m_model.addListener(EntityStartCooldown.EvtName, onStartCooldown);
+    }
+
+    public void RemoveModel()
+    {
+        if (m_model == null) return;
+        m_model.removeListener(EntityStartCast.EvtName, onStartCast);
+        m_model.removeListener(EntityStartCast.EvtName, onStartChannel);
+        m_model.removeListener(EntityStartCooldown.EvtName, onStartCooldown);
+        m_model = null;
+    }
+
+    void onStartCast(EventObject e)
+    {
+        EntityStartCast evt = e as EntityStartCast;
+        EventBus.ui.dispatch(new AbilityStartCast(evt.abilityIdx, evt.castPeriod, evt.startTime));
+    }
+
+    void onStartChannel(EventObject e)
+    {
+        /* TODO: startChannel UI event
+        EntityStartChannel evt = e as EntityStartChannel;
+
+        EventBus.ui.dispatch(new AbilityStartChannel(evt.abilityIdx, evt.channelPeriod, evt.startTime));
+        */
+    }
+
+    void onStartCooldown(EventObject e)
+    {
+        EntityStartCooldown evt = e as EntityStartCooldown;
+        EventBus.ui.dispatch(new AbilityStartCooldown(evt.abilityIdx, evt.cooldownPeriod, evt.startTime));
+    }
 
     void onKeyEvent(EventObject e)
     {
@@ -82,6 +122,9 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
 
         ability.startCast();
         m_model.dispatch(new TriggerAnimEvent("someAnimation"));
+
+        CastCommandModel abilityModel = ability.getModel();
+        EventBus.ui.dispatch(new AbilityStartCast(abilityIdx, abilityModel.castTime, CastCommandTime.Get()));
     }
 
     void doPlayerTargetChange()

@@ -29,7 +29,5 @@ public class EntityAnimationController : MonoBehaviour {
     void onTriggerAnim(EventObject e)
     {
         Debug.LogWarning("todo: trigger animation");
-
-
     }
 }

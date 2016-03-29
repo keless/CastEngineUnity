@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -81,11 +83,14 @@
     <Compile Include="Assets\GameCode\Controller\EntityAnimationController.cs" />
     <Compile Include="Assets\GameCode\Controller\PlayerEntityController.cs" />
     <Compile Include="Assets\GameCode\Controller\TriggerHPBarOnTargeted.cs" />
+    <Compile Include="Assets\GameCode\Events\EntityModelEvents.cs" />
+    <Compile Include="Assets\GameCode\Events\GUIEvents.cs" />
     <Compile Include="Assets\GameCode\Events\GameEvents.cs" />
     <Compile Include="Assets\GameCode\Factories\EntityFactory.cs" />
     <Compile Include="Assets\GameCode\InputEventBridge.cs" />
     <Compile Include="Assets\GameCode\Model\EntityModel.cs" />
     <Compile Include="Assets\GameCode\Model\GameWorldModel.cs" />
+    <Compile Include="Assets\GameCode\View\SkillButtonView.cs" />
     <Compile Include="Assets\GameCode\View\TargetPanelView.cs" />
     <Compile Include="Assets\GameCode\View\UIHPBarView.cs" />
     <Compile Include="Assets\Imports\Standard Assets\Cameras\Scripts\AbstractTargetFollower.cs" />
