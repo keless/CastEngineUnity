@@ -30,6 +30,7 @@ public class SkillButtonView : CommonMonoBehaviour {
 
         SetListener(AbilityStartCast.EvtName, onAbilityStartCast);
         SetListener(AbilityStartCooldown.EvtName, onAbilityStartCooldown);
+        SetListener(AbilityStartIdle.EvtName, onAbilityStartIdle);
     }
 	
 	// Update is called once per frame
@@ -41,12 +42,15 @@ public class SkillButtonView : CommonMonoBehaviour {
         float dt = (float)(ct - m_stateStart);
 
         if (dt > m_statePeriod) dt = m_statePeriod;
-        float pct = m_statePeriod / dt;
+        float pct = dt / m_statePeriod;
 
         switch(m_state)
         {
+            case SkillButtonState.CASTING:
+                imgCooldownFilter.fillAmount = (pct);
+                break;
             case SkillButtonState.COOLDOWN:
-                imgCooldownFilter.fillAmount = 100.0f - (100.0f * pct);
+                imgCooldownFilter.fillAmount = 1.0f - (pct);
                 break;
         }
 	}
@@ -84,7 +88,7 @@ public class SkillButtonView : CommonMonoBehaviour {
             return;
         }
 
-        Debug.Log("todo: start cast animation on skill button " + abilityIndex);
+        gotoState(SkillButtonState.CASTING, evt.castPeriod, evt.startTime);
     }
 
     void onAbilityStartCooldown(EventObject e)
@@ -106,6 +110,6 @@ public class SkillButtonView : CommonMonoBehaviour {
             return;
         }
 
-        gotoState(SkillButtonState.COOLDOWN, 0f, evt.startTime);
+        gotoState(SkillButtonState.IDLE, 0f, evt.startTime);
     }
 }

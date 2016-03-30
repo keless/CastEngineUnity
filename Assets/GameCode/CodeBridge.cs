@@ -23,7 +23,7 @@ public class CodeBridge : CommonMonoBehaviour {
         m_playerEntity = EntityFactory.CreatePlayer(m_gameWorld, new Vector3(0, 1, 0));
         m_playerEntity.setProperty("hp_curr", m_playerEntity.hp_base / 2, null);
 
-        EntityFactory.CreateDummy(m_gameWorld, new Vector3(10, 1, 0));
+        EntityFactory.CreateDummy(m_gameWorld, new Vector3(0, 1, -3));
     }
 	
 	// Update is called once per frame

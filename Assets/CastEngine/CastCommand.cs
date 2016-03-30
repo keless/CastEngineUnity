@@ -174,7 +174,7 @@ public class CastCommandState
 
         this.m_state = CastCommandState.IDLE;
 
-        //TODO: send cooldown complete signal
+        this.m_iOwner.onAbilityIdleStart(this);
     }
 
 
