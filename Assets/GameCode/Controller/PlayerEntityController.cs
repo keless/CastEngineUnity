@@ -36,16 +36,18 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
         RemoveModel();
         m_model = model;
         m_model.addListener(EntityStartCast.EvtName, onStartCast);
-        m_model.addListener(EntityStartCast.EvtName, onStartChannel);
+        m_model.addListener(EntityStartChannel.EvtName, onStartChannel);
         m_model.addListener(EntityStartCooldown.EvtName, onStartCooldown);
+        m_model.addListener(EntityStartIdle.EvtName, onStartIdle);
     }
 
     public void RemoveModel()
     {
         if (m_model == null) return;
         m_model.removeListener(EntityStartCast.EvtName, onStartCast);
-        m_model.removeListener(EntityStartCast.EvtName, onStartChannel);
+        m_model.removeListener(EntityStartChannel.EvtName, onStartChannel);
         m_model.removeListener(EntityStartCooldown.EvtName, onStartCooldown);
+        m_model.removeListener(EntityStartIdle.EvtName, onStartIdle);
         m_model = null;
     }
 
@@ -68,6 +70,12 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
     {
         EntityStartCooldown evt = e as EntityStartCooldown;
         EventBus.ui.dispatch(new AbilityStartCooldown(evt.abilityIdx, evt.cooldownPeriod, evt.startTime));
+    }
+
+    void onStartIdle(EventObject e)
+    {
+        EntityStartIdle evt = e as EntityStartIdle;
+        EventBus.ui.dispatch(new AbilityStartIdle(evt.abilityIdx, evt.startTime));
     }
 
     void onKeyEvent(EventObject e)

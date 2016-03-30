@@ -30,7 +30,7 @@ public class EntityFactory : MonoBehaviour
         string strJson = @"{
                 ""name"": ""Attack"",
 		        ""castTime"": 0.45,
-		        ""cooldownTime"": 0.85,
+		        ""cooldownTime"": 2.85,
 		        ""range"": 5,
 		        ""effectsOnCast"": [
 				        {

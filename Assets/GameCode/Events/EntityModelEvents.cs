@@ -16,6 +16,21 @@ public class TriggerAnimEvent : EventObject
 }
 
 /// <summary>
+/// sent when entity ability goes on idle
+/// </summary>
+public class EntityStartIdle : EventObject
+{
+    public const string EvtName = "EntityStartIdle";
+    public int abilityIdx { get; protected set; }
+    public double startTime { get; protected set; }
+    public EntityStartIdle(int abilityIndex, double startTimeS) : base(EvtName)
+    {
+        abilityIdx = abilityIndex;
+        startTime = startTimeS;
+    }
+}
+
+/// <summary>
 /// sent when entity starts casting an ability
 /// </summary>
 public class EntityStartCast : EventObject

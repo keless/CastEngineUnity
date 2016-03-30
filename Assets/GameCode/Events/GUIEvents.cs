@@ -40,3 +40,20 @@ public class AbilityStartCooldown : EventObject
         startTime = startTimeS;
     }
 }
+
+/// <summary>
+/// Called on UI bus when an ability is on idle 
+///     abilityIdx is the index into player's ability list to the ability
+///     startTime is the time from CastCommandTime which the idle started 
+/// </summary>
+public class AbilityStartIdle : EventObject
+{
+    public const string EvtName = "AbilityStartIdle";
+    public int abilityIdx { get; protected set; }
+    public double startTime { get; protected set; }
+    public AbilityStartIdle(int abilityIndex, double startTimeS) : base(EvtName)
+    {
+        abilityIdx = abilityIndex;
+        startTime = startTimeS;
+    }
+}

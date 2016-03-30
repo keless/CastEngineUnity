@@ -322,7 +322,6 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
     public void onAbilityCastStart(CastCommandState ability)
     {
         int index = m_abilities.IndexOf(ability);
-
         this.dispatch(new EntityStartCast(index, ability.getCastPeriod(), CastCommandTime.Get()));
     }
     public void onAbilityChannelStart(CastCommandState ability)
@@ -337,8 +336,8 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
     }
     public void onAbilityIdleStart(CastCommandState ability)
     {
-        //int index = m_abilities.IndexOf(ability);
-        //do we need this?
+        int index = m_abilities.IndexOf(ability);
+        this.dispatch(new EntityStartIdle(index, CastCommandTime.Get()));
     }
 
     //IHitpointProvider
