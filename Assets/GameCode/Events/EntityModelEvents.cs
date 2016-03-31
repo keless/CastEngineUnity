@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 /// <summary>
 /// sent when entity performs an action that requires an animation
@@ -78,5 +79,51 @@ public class EntityStartCooldown : EventObject
         abilityIdx = abilityIndex;
         cooldownPeriod = period;
         startTime = startTimeS;
+    }
+}
+
+class GameEntityDied : EventObject
+{
+    public const string EvtName = "GameEntityDied";
+
+    public GameEntityDied() : base(EvtName)
+    {
+
+    }
+}
+
+class GameEntityPropertyChangeEvt : EventObject
+{
+    public string propName;
+    public float value;
+    public GameEntityPropertyChangeEvt(string evtName, string prop, float val) : base(evtName)
+    {
+        propName = prop;
+        value = val;
+    }
+}
+
+class GameEntityReactEvt : EventObject
+{
+    public JToken reaction;
+    public CastEffect source;
+    public GameEntityReactEvt(JToken react, CastEffect src) : base("GameEntityReactEvt")
+    {
+        reaction = react;
+        source = src;
+    }
+}
+
+//NOTE: dispatches on global game bus, not the GameEntity
+class GameEntityEffectEvt : EventObject
+{
+    public string effectName;
+    public ICastEntity from;
+    public ICastEntity to;
+    public GameEntityEffectEvt(string effectEventName, ICastEntity f, ICastEntity t) : base("GameEntityEffectEvt")
+    {
+        effectName = effectEventName;
+        from = f;
+        to = t;
     }
 }

@@ -97,7 +97,7 @@ public class CastEngineUnitTests {
         CastCommandScheduler.Reset();
 
 		TestCastPhysics physics = new TestCastPhysics ();
-		CastWorldModel.Get ().setPhysicsInterface (physics);
+		CastWorldModel.Get ().SetPhysicsInterface (physics);
 	}
 
     [Test]

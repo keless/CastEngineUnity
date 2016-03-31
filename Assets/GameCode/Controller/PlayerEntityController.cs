@@ -23,6 +23,7 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
 
         SetListener("btnSkill1", onBtnSkill1);
         SetListener(KeyEvent.EvtName, onKeyEvent);
+        SetListener(EntityDied.EvtName, onEntityDeath, "game");
 	}
 
     new void OnDestroy()
@@ -170,6 +171,24 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
 
         if( currentTargetCount != newTargetCount )
         {
+            EventBus.game.dispatch(new PlayerTargetSelected(newTarget));
+        }
+    }
+
+    void onEntityDeath(EventObject e)
+    {
+        EntityDied evt = e as EntityDied;
+        ICastEntity deadEntity = evt.target;
+
+        //de-select target if it died
+        CastTarget target = m_model.getTarget();
+        
+        if(target.getEntityList().Contains(deadEntity))
+        {
+            target.removeTargetEntity(deadEntity);
+
+            List<ICastEntity> currentTargets = target.getEntityList();
+            ICastEntity newTarget = (currentTargets.Count == 0) ? null : currentTargets[0];
             EventBus.game.dispatch(new PlayerTargetSelected(newTarget));
         }
     }

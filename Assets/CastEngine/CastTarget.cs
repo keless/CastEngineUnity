@@ -37,12 +37,22 @@ public class CastTarget
     }
 
     // in: ICastEntity target
-    public void addTargetEntity(ICastEntity target )
+    public void addTargetEntity(ICastEntity target)
     {
         if (target == null) return;
 
+#if DEBUG
+        Debug.Assert(CastWorldModel.Get().isValid(target));
+#endif
+
         this.m_type = CastTargetType.ENTITIES;
         this.m_entityList.Add(target);
+    }
+
+    public void removeTargetEntity(ICastEntity target)
+    {
+        if(m_type == CastTargetType.ENTITIES)
+        m_entityList.Remove(target);
     }
 
     public void setTargetPosition(Vector2 target )

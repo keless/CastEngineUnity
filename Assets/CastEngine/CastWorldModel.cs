@@ -57,6 +57,11 @@ public class CastEffectPath
     public List<CastEffect> effects = new List<CastEffect>();
 }
 
+public interface ICastWorldDelegate
+{
+    void onEntityDeath(ICastEntity entity);
+}
+
 /*
  CastWorldModel
  
@@ -85,6 +90,7 @@ public class CastWorldModel
     Dictionary<ICastEntity, ICastEntity> m_allEntities = new Dictionary<ICastEntity, ICastEntity>();
     List<CastEffectPath> m_effectsInTransit = new List<CastEffectPath>();
     ICastPhysics m_pPhysics = null;
+    ICastWorldDelegate m_delegate = null;
 
     CastWorldModel()
     {
@@ -93,7 +99,12 @@ public class CastWorldModel
 
     void Destroy()
     {
+        m_delegate = null;
+    }
 
+    public void SetDelegate(ICastWorldDelegate castWorldDelegate)
+    {
+        m_delegate = castWorldDelegate;
     }
 
     public void AddEntity(ICastEntity entity )
@@ -101,14 +112,24 @@ public class CastWorldModel
         this.m_allEntities[entity] = entity;
     }
 
-
-    public void RemoveEntity(ICastEntity entity )
+    public bool RemoveEntity(ICastEntity entity )
     {
         if( m_allEntities.ContainsKey(entity))
         {
             m_allEntities.Remove(entity);
+            return true;
+        }
+        return false;
+    }
+
+    public void handleEntityDeath(ICastEntity entity)
+    {
+        if( RemoveEntity(entity) )
+        {
+            if (m_delegate != null) m_delegate.onEntityDeath(entity);
         }
     }
+
 
     public int CountEntities()
     {
@@ -116,7 +137,7 @@ public class CastWorldModel
     }
 
     // in: ICastPhysics physics
-    public void setPhysicsInterface(ICastPhysics physics )
+    public void SetPhysicsInterface(ICastPhysics physics )
     {
         this.m_pPhysics = physics;
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameWorldModel : ICastPhysics
+public class GameWorldModel : ICastPhysics, ICastWorldDelegate
 {
     CastWorldModel m_world;
     Dictionary<GameObject, EntityModel> m_objectEntityMap;
@@ -13,7 +13,8 @@ public class GameWorldModel : ICastPhysics
         m_codeBridge = cb;
         m_objectEntityMap = new Dictionary<GameObject, EntityModel>();
         m_world = CastWorldModel.Get();
-        m_world.setPhysicsInterface(this);
+        m_world.SetPhysicsInterface(this);
+        m_world.SetDelegate(this);
     }
 
     bool _destroyed = false;
@@ -34,12 +35,14 @@ public class GameWorldModel : ICastPhysics
         }
     }
 
+
     public void AddGameObjectEntityPair(GameObject go, EntityModel model)
     {
         model.gameObject = go;
         m_objectEntityMap.Add(go, model);
         m_world.AddEntity(model);
     }
+
     public void RemoveGameObjectEntityPair(GameObject go, bool destroy = true)
     {
         EntityModel model = m_objectEntityMap[go];
@@ -52,6 +55,14 @@ public class GameWorldModel : ICastPhysics
             m_world.RemoveEntity(model);
             model.Destroy();
         }
+    }
+
+    public void onEntityDeath(ICastEntity entity)
+    {
+        EntityModel model = entity as EntityModel;
+        RemoveGameObjectEntityPair(model.gameObject, true);
+
+        EventBus.game.dispatch(new EntityDied(entity));
     }
 
     // ICastPhysics

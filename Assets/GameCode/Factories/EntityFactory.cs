@@ -37,7 +37,7 @@ public class EntityFactory : MonoBehaviour
 						        ""effectType"": ""damage"",
 						        ""damageType"": ""piercing"",
 						        ""targetStat"": ""hp_curr"",
-						        ""valueBase"": 10,
+						        ""valueBase"": 50,
 						        ""valueStat"": ""str"",
 						        ""valueMultiplier"": 2,
 						        ""react"": ""shake""

@@ -14,6 +14,8 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
     EventBus eventBus = new EventBus("EntityModel");
     string m_name = "";
 
+    bool m_isDead;
+
     Dictionary<string, int> m_stats;
 
     //todo List<object> m_items;
@@ -30,6 +32,7 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
         Debug.Log("creating EntityModel(" + name + ")");
 
         eventBus.verbose = false;
+        m_isDead = false;
 
         m_name = name;
         m_abilities = new List<CastCommandState>();
@@ -146,6 +149,20 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
         return true;
     }
 
+    void _checkForDeath()
+    {
+        if(!m_isDead && hp_curr <= 0)
+        {
+            Debug.LogWarning("entity died");
+            hp_curr = 0;
+            m_isDead = true;
+
+            dispatch(new GameEntityDied());
+
+            CastWorldModel.Get().handleEntityDeath(this);
+        }
+    }
+
     // ICastEntity methods
     public void setProperty(string propName, float value, CastEffect effect)
     {
@@ -161,6 +178,11 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
         }
 
         dispatch(new GameEntityPropertyChangeEvt("setProperty", propName, value));
+
+        if( propName == "hp_base" || propName == "hp_curr")
+        {
+            _checkForDeath();
+        }
     }
     public void incProperty(string propName, float value, CastEffect effect)
     {
@@ -168,11 +190,7 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
 
         if( propName == "hp_curr" && value < 0 )
         {
-            if(hp_curr <= 0)
-            {
-                //dont beat a dead entity
-                return;
-            }
+            if (m_isDead) return;
         }
 
         m_stats[propName] += (int)value;
@@ -182,20 +200,17 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
             if (hp_curr > hp_base)
             {
                 hp_curr = hp_base; //clamp hp_curr to max
+
+                _checkForDeath();
             }
         }
-
-        //bounds check hp_curr
-        if (propName == "hp_curr")
+        else if (propName == "hp_curr")
         {
+            //bounds check hp_curr
             if (hp_curr < 0) hp_curr = 0;
             if (hp_curr > hp_base) hp_curr = hp_base;
 
-            if (hp_curr == 0)
-            {
-                //todo: handle entity death
-                Debug.Log("todo: handle entity death");
-            }
+            _checkForDeath();
         }
         else if (propName == "xp_curr" && m_stats["xp_next"] != 0)
         {
@@ -234,6 +249,8 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
                 //losing max health
                 if (hp_base < 0) hp_base = 0;
                 if (hp_curr > hp_base) hp_curr = hp_base;
+
+                _checkForDeath();
             }
         }
     }
@@ -363,41 +380,5 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
     public void dispatch(EventObject eventObj)
     {
         eventBus.dispatch(eventObj);
-    }
-}
-
-class GameEntityPropertyChangeEvt : EventObject
-{
-    public string propName;
-    public float value;
-    public GameEntityPropertyChangeEvt(string evtName, string prop, float val) : base(evtName)
-    {
-        propName = prop;
-        value = val;
-    }
-}
-
-class GameEntityReactEvt : EventObject
-{
-    public JToken reaction;
-    public CastEffect source;
-    public GameEntityReactEvt( JToken react, CastEffect src ) : base("GameEntityReactEvt")
-    {
-        reaction = react;
-        source = src;
-    }
-}
-
-//NOTE: dispatches on global game bus, not the GameEntity
-class GameEntityEffectEvt : EventObject
-{
-    public string effectName;
-    public ICastEntity from;
-    public ICastEntity to;
-    public GameEntityEffectEvt(string effectEventName, ICastEntity f, ICastEntity t) : base("GameEntityEffectEvt")
-    {
-        effectName = effectEventName;
-        from = f;
-        to = t;
     }
 }
