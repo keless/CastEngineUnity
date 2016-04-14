@@ -120,7 +120,7 @@ public class CastEffect
         this.m_value = (float?)json["valueBase"] ?? 0.0f; //ex: 10 damage
                                                  //todo: handle caster stat modifiers
 
-        this.m_lifeTime = (float?)json["effectLifetime"] ?? 0.0f; //ex: 1.0 seconds
+        this.m_lifeTime = (float?)json["lifeTime"] ?? 0.0f; //ex: 1.0 seconds
 
         this.m_tickFreq = (float?)json["tickFreq"] ?? this.m_tickFreq;
     }
@@ -135,11 +135,13 @@ public class CastEffect
 
     public void startTicks()
     {
-        if (this.m_type == CastEffectType.BUFF_STAT || this.m_type == CastEffectType.SUPPRESS_STAT || this.m_type == CastEffectType.SEND_EVENT)
+        if (this.m_type == CastEffectType.BUFF_STAT || this.m_type == CastEffectType.SUPPRESS_STAT || this.m_type == CastEffectType.SEND_EVENT || this.getLifeTime() == 0)
         {
+            Debug.Log("xxx start ticks, do effect immediately");
             this.doEffect();
         }
         else {
+            Debug.Log("xxx start ticks, schedule onTick");
             this.m_numTicksCompleted = 0;
             CastCommandScheduler.Get().scheduleSelector(this.onTick, this.m_tickFreq);
         }
@@ -244,7 +246,11 @@ public class CastEffect
     // in: float dt
     public void onTick()
     {
+        Debug.Log("onTick()");
+
         if (!CastWorldModel.Get().isValid(this.m_pTarget)) return;
+
+        Debug.Log("onTick() targetvalid");
 
         var currTime = CastCommandTime.Get();
         var delta = currTime - this.m_startTime;
@@ -253,26 +259,34 @@ public class CastEffect
         if (this.m_type == CastEffectType.SUPPRESS_STAT || this.m_type == CastEffectType.BUFF_STAT)
         {
             //handle buff/debuff end
-            if (delta == this.m_lifeTime)
+            if (delta >= this.m_lifeTime)
             {
-                CastCommandScheduler.Get().unscheduleSelector(this.onTick);
+                //CastCommandScheduler.Get().unscheduleSelector(this.onTick); //not a repeating timer, dont need to cancel if we were just called
                 if (this.m_type == CastEffectType.BUFF_STAT)
                 {
                     this.m_pTarget.endBuffProperty(this.m_targetStat, -1 * this.m_value, this);
                 }
-                else {
+                else
+                {
                     this.m_pTarget.endBuffProperty(this.m_targetStat, this.m_value, this);
                 }
 
                 this.m_pTarget.removeEffect(this);
             }
+            else
+            {
+                CastCommandScheduler.Get().scheduleSelector(this.onTick, this.m_tickFreq);
+            }
 
         }
         else {
+            Debug.Log("type != stat");
+
             //handle dmg/heal over time ticks
             var numTicksPassed = delta / this.m_tickFreq;
 
             var ticksToDo = numTicksPassed - this.m_numTicksCompleted;
+            Debug.Log("ticks to do " + ticksToDo + " passed - completed : " + numTicksPassed + " - " + m_numTicksCompleted);
             for (var i = 0; i < ticksToDo; i++)
             {
                 this.doEffect();
@@ -281,8 +295,15 @@ public class CastEffect
 
             if (delta >= this.m_lifeTime)
             {
+                Debug.Log("effect ticks complete");
+
                 this.m_pTarget.removeEffect(this);
-                this.cancelTicks();
+                //this.cancelTicks(); //not a repeating timer, dont need to cancel if we were just called
+            }
+            else
+            {
+                //continue ticking
+                CastCommandScheduler.Get().scheduleSelector(this.onTick, this.m_tickFreq);
             }
         }
     }
@@ -290,12 +311,15 @@ public class CastEffect
 
     public void cancelTicks()
     {
+        Debug.Log("cancelTicks()");
         CastCommandScheduler.Get().unscheduleSelector(this.onTick);
     }
 
 
     public void doEffect()
     {
+        Debug.Log("doEffect()_");
+
         var world = CastWorldModel.Get();
 
         if (!world.isValid(this.m_pTarget)) return;
@@ -308,6 +332,8 @@ public class CastEffect
         {
             this.m_pTarget.handleEffectReaction(json["react"], this);
         }
+
+        Debug.Log("doEffect()");
 
         switch (this.m_type)
         {

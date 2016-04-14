@@ -224,6 +224,8 @@ public class CastWorldModel
     // in: CastEffectPath path
     public void applyEffectToTarget(CastEffectPath path )
     {
+        Debug.Log("xxx applyEffectToTarget");
+
         var currTime = CastCommandTime.Get();
         for (var i = 0; i < path.effects.Count; i++)
         {
@@ -266,6 +268,7 @@ public class CastWorldModel
                 eff.setTarget(target);
                 eff.m_startTime = currTime; //start the clock on the effect's life time
 
+                Debug.Log("xxx applyEffectToTarget --  target.applyEffect"); 
                 target.applyEffect(eff);
             }
         }

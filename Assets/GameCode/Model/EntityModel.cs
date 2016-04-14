@@ -288,9 +288,11 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
     //effect is ARRIVING at this entity
     public void applyEffect(CastEffect effect)
     {
+        
         if( effect.getLifeTime() == 0 )
         {
-            effect.doEffect();
+            Debug.Log("apply effect - instant");
+            effect.startTicks();
         }else
         {
             switch(effect.getType())
@@ -302,15 +304,20 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
                     m_debuffs.Add(effect.getName(), effect);
                     break;
                 case CastEffectType.DAMAGE_STAT:
+                    Debug.Log("apply effect - dot");
                     m_negativeEffects.Add(effect);
                     break;
                 case CastEffectType.HEAL_STAT:
+                    Debug.Log("apply effect - hot");
                     m_positiveEffects.Add(effect);
                     break;
                 default:
                     Debug.LogWarning("unexpected cast effect type");
                     break;
             }
+
+            Debug.Log("apply effect - start effect");
+            effect.startTicks();
         }
     }
     public void removeEffect(CastEffect effect)

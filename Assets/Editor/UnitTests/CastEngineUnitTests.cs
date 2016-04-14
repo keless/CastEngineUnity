@@ -40,6 +40,24 @@ public class CastEngineUnitTests {
 		        ]
 	        }");
 
+    JToken jsonAbility3 = JToken.Parse(@"{
+                ""name"": ""Poison"",
+		        ""castTime"": 0.0,
+		        ""cooldownTime"": 1.85,
+		        ""range"": 500,
+		        ""effectsOnCast"": [
+				        {
+						        ""effectType"": ""damage"",
+                                ""tickFreq"":1,
+                                ""lifeTime"":5,
+						        ""targetStat"": ""hp_curr"",
+						        ""valueBase"": 10,
+						        ""valueStat"": ""int"",
+						        ""valueMultiplier"": 2
+                        }
+		        ]
+	        }");
+
     JToken jsonEntitySerialization = JToken.Parse(@"{
         ""name"":""bob"",
         ""stats"":{
@@ -261,7 +279,63 @@ public class CastEngineUnitTests {
         Assert.IsFalse(target.hp_curr == 100);
 
         world.RemoveEntity(target);
+        entity.Destroy();
+        target.Destroy();
+    }
 
+    [Test]
+    public void testDamageOverTime()
+    {
+        __cleanTestEnvironment__();
+
+        CastCommandScheduler scheduler = CastCommandScheduler.Get();
+        CastWorldModel world = CastWorldModel.Get();
+
+        TestCastEntity entity = new TestCastEntity();
+        EntityModel target = new EntityModel("dotTarg1");
+        world.AddEntity(target);
+        entity.testSetTarget(target);
+
+        CastCommandModel model = new CastCommandModel(jsonAbility3);
+        CastCommandState instance = new CastCommandState(model, entity);
+
+        Assert.IsTrue(target.hp_curr == 100);
+        Assert.IsTrue(instance.startCast());
+
+        CastCommandTime.UpdateDelta(1.0);
+        scheduler.Update();
+
+        CastCommandTime.UpdateDelta(1.0);
+        scheduler.Update();
+        Assert.IsTrue(target.hp_curr == 90);
+
+        CastCommandTime.UpdateDelta(1.0);
+        scheduler.Update();
+        Assert.IsTrue(target.hp_curr == 80);
+
+        CastCommandTime.UpdateDelta(1.0);
+        scheduler.Update();
+        Assert.IsTrue(target.hp_curr == 70);
+
+        CastCommandTime.UpdateDelta(1.0);
+        scheduler.Update();
+        Assert.IsTrue(target.hp_curr == 60);
+
+        CastCommandTime.UpdateDelta(1.0);
+        scheduler.Update();
+        Assert.IsTrue(target.hp_curr == 50);
+
+        CastCommandTime.UpdateDelta(1.0);
+        scheduler.Update();
+        Assert.IsTrue(target.hp_curr == 50); //make sure its still 50
+
+        CastCommandTime.UpdateDelta(1.0);
+        scheduler.Update();
+        Assert.IsTrue(target.hp_curr == 50); //make sure its still 50
+
+        //xxx
+
+        world.RemoveEntity(target);
         entity.Destroy();
         target.Destroy();
     }
