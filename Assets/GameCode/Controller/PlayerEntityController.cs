@@ -40,6 +40,9 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
         m_model.addListener(EntityStartChannel.EvtName, onStartChannel);
         m_model.addListener(EntityStartCooldown.EvtName, onStartCooldown);
         m_model.addListener(EntityStartIdle.EvtName, onStartIdle);
+
+        Debug.Log("set model - player initialized");
+        EventBus.ui.dispatch(new PlayerInitialized(m_model));
     }
 
     public void RemoveModel()

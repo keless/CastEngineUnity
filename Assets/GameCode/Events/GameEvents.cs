@@ -30,3 +30,13 @@ public class EntityDied : EventObject
         target = targ;
     }
 }
+public class PlayerInitialized : EventObject
+{
+    public const string EvtName = "PlayerInitialized";
+    public EntityModel player { get; private set; }
+
+    public PlayerInitialized(EntityModel playerModel) : base(EvtName)
+    {
+        player = playerModel;
+    }
+}

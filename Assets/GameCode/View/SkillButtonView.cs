@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SkillButtonView : CommonMonoBehaviour {
 
-    [SerializeField] int abilityIndex;
+    public int abilityIndex;
 
     enum SkillButtonState
     {

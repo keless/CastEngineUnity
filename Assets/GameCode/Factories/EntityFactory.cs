@@ -10,21 +10,13 @@ public class EntityFactory : MonoBehaviour
         //ThirdPersonCharacter
         //EntityView
         //PlayerEntityController
-        GameObject entityPre = (GameObject)Resources.Load("GameEntity", typeof(GameObject));
+        GameObject entityPre = (GameObject)Resources.Load<GameObject>("GameEntity");
         GameObject go = (GameObject)Instantiate(entityPre, pos, rot);
         go.tag = "Player";
 
         //PlayerEntityController peCtrl = go.AddComponent<PlayerEntityController>();
         EntityModel model = new EntityModel("player");
-        PlayerEntityController.AddPlayerEntityController(go, model);
 
-        EntityAnimationController animController = go.GetComponent<EntityAnimationController>();
-        animController.SetModel(model);
-
-        go.GetComponentInChildren<BillboardHPBar>().hpValueProvider = model;
-
-        //todo: em.initFromJson();
-        world.AddGameObjectEntityPair(go, model);
 
         //create temp ability
         string strJson = @"{
@@ -51,6 +43,16 @@ public class EntityFactory : MonoBehaviour
         CastCommandState ability = new CastCommandState(ability1, model);
         model.testAddAbility(ability);
 
+
+        PlayerEntityController.AddPlayerEntityController(go, model);
+
+        EntityAnimationController animController = go.GetComponent<EntityAnimationController>();
+        animController.SetModel(model);
+
+        go.GetComponentInChildren<BillboardHPBar>().hpValueProvider = model;
+
+        //todo: em.initFromJson();
+        world.AddGameObjectEntityPair(go, model);
 
         go.SetActive(true);
 
