@@ -4,7 +4,7 @@ using System.Collections;
 public class SkillBarViewController : CommonMonoBehaviour {
 
 
-    public int spacing = 200;
+    public int spacing = 75;
 
 	// Use this for initialization
 	void Start () {
@@ -35,12 +35,13 @@ public class SkillBarViewController : CommonMonoBehaviour {
             Debug.Log("create skill button for " + abilities[i].getName());
 
             GameObject skillBtn = SkillButtonFactory.CreateSkillButton(i, abilities[i].getName());
+
+
+            //note: Unity wants UI objects to use SetParent(,false) -- tell a friend!
+            (skillBtn.transform as RectTransform).SetParent(transform, false);
+            Debug.Log("pos " + pos.ToString());
             skillBtn.transform.position = pos;
             pos.x += spacing;
-
-            //xxx
-            (skillBtn.transform as RectTransform).SetParent(transform, false);
-            //skillBtn.transform.parent = transform;
         }
     }
 }

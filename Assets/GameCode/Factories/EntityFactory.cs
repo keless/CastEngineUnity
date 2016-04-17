@@ -4,6 +4,54 @@ using Newtonsoft.Json.Linq;
 
 public class EntityFactory : MonoBehaviour
 {
+    static string tempAbility1 = @"{
+                ""name"": ""Attack"",
+		        ""castTime"": 0.45,
+		        ""cooldownTime"": 2.85,
+		        ""range"": 5,
+                ""element"":""sword"",
+		        ""effectsOnCast"": [
+				        {
+						        ""effectType"": ""damage"",
+						        ""damageType"": ""piercing"",
+						        ""targetStat"": ""hp_curr"",
+						        ""valueBase"": 50,
+						        ""valueStat"": ""str"",
+						        ""valueMultiplier"": 2,
+						        ""react"": ""shake""
+                        }
+		        ]
+	        }";
+    static string tempAbility2 = @"{
+                ""name"": ""Shoot"",
+		        ""castTime"": 0.15,
+		        ""cooldownTime"": 0.75,
+		        ""range"": 50,
+                ""element"":""ice"",
+		        ""effectsOnCast"": [
+				        {
+						        ""effectType"": ""damage"",
+						        ""damageType"": ""piercing"",
+						        ""targetStat"": ""hp_curr"",
+						        ""valueBase"": 10,
+						        ""valueStat"": ""int"",
+						        ""valueMultiplier"": 2,
+						        ""react"": ""shatter""
+                        }
+		        ]
+	        }";
+
+
+    static void AddAbilityToModel(JToken abilityJson, EntityModel model)
+    {
+        //TODO: use abilityId as input, then look up a dictionary JSON cache of abilities
+        CastCommandModel abilityModel = new CastCommandModel(abilityJson);
+
+        // add instance to model
+        CastCommandState ability = new CastCommandState(abilityModel, model);
+        model.testAddAbility(ability);
+    }
+
     public static EntityModel CreatePlayer(GameWorldModel world, Vector3 pos, Quaternion rot = new Quaternion())
     {
         //ThirdPersonUserControl
@@ -17,32 +65,8 @@ public class EntityFactory : MonoBehaviour
         //PlayerEntityController peCtrl = go.AddComponent<PlayerEntityController>();
         EntityModel model = new EntityModel("player");
 
-
-        //create temp ability
-        string strJson = @"{
-                ""name"": ""Attack"",
-		        ""castTime"": 0.45,
-		        ""cooldownTime"": 2.85,
-		        ""range"": 5,
-		        ""effectsOnCast"": [
-				        {
-						        ""effectType"": ""damage"",
-						        ""damageType"": ""piercing"",
-						        ""targetStat"": ""hp_curr"",
-						        ""valueBase"": 50,
-						        ""valueStat"": ""str"",
-						        ""valueMultiplier"": 2,
-						        ""react"": ""shake""
-                        }
-		        ]
-	        }";
-        JToken abilityJson = JToken.Parse(strJson);
-        CastCommandModel ability1 = new CastCommandModel(abilityJson);
-
-        // add to model
-        CastCommandState ability = new CastCommandState(ability1, model);
-        model.testAddAbility(ability);
-
+        AddAbilityToModel(JToken.Parse(tempAbility1), model);
+        AddAbilityToModel(JToken.Parse(tempAbility2), model);
 
         PlayerEntityController.AddPlayerEntityController(go, model);
 

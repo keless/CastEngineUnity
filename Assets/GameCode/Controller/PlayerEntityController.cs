@@ -21,7 +21,9 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
     // Use this for initialization
     void Start () {
 
-        SetListener("btnSkill1", onBtnSkill1);
+        SetListener("btnSkill0", onBtnSkill);
+        SetListener("btnSkill1", onBtnSkill);
+        SetListener("btnSkill2", onBtnSkill);
         SetListener(KeyEvent.EvtName, onKeyEvent);
         SetListener(EntityDied.EvtName, onEntityDeath, "game");
 	}
@@ -103,11 +105,10 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
         }
     }
 
-    void onBtnSkill1(EventObject e)
+    void onBtnSkill(EventObject e)
     {
-        Debug.Log("todo: use ability");
-
-        attemptAbility(0);
+        int abilityIdx = int.Parse( e.name.Substring("btnSkill".Length) );
+        attemptAbility(abilityIdx);
     }
 
     void attemptAbility( int abilityIdx )
