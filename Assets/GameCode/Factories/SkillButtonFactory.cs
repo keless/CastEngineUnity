@@ -11,15 +11,17 @@ class SkillButtonFactory
     public static GameObject CreateSkillButton(int abilityIdx, string strLabel)
     {
         GameObject buttonPre = (GameObject)Resources.Load<GameObject>("btnSkill");
-        buttonPre.name = "btnSkill" + abilityIdx;
 
-        Text label = buttonPre.transform.FindChild("Text").GetComponent<Text>();
+        GameObject btn = GameObject.Instantiate(buttonPre);
+        btn.name = "btnSkill" + abilityIdx;
+
+        Text label = btn.transform.FindChild("Text").GetComponent<Text>();
         label.text = strLabel;
 
-        SkillButtonView sbView = buttonPre.GetComponent<SkillButtonView>();
+        SkillButtonView sbView = btn.GetComponent<SkillButtonView>();
         sbView.abilityIndex = abilityIdx;
 
-        return buttonPre;
+        return btn;
     }
 }
 
