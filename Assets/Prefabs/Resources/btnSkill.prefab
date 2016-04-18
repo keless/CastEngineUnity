@@ -31,7 +31,7 @@ GameObject:
   - 114: {fileID: 11490756}
   - 114: {fileID: 11458830}
   m_Layer: 5
-  m_Name: btnSkill
+  m_Name: btnSkill0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: Attack
 --- !u!114 &11458830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -273,7 +273,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -206, y: 0}
+  m_AnchoredPosition: {x: 416, y: 180}
   m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &100100000

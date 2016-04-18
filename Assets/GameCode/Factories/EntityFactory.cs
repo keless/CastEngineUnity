@@ -41,6 +41,24 @@ public class EntityFactory : MonoBehaviour
 		        ]
 	        }";
 
+    static string tempAbility3 = @"{
+                ""name"": ""Curse"",
+		        ""castTime"": 0.15,
+		        ""cooldownTime"": 1.75,
+		        ""range"": 50,
+                ""element"":""shadow"",
+		        ""effectsOnCast"": [
+				        {
+						        ""effectType"": ""damage"",
+                                ""tickFreq"":1,
+                                ""lifeTime"":5,
+						        ""targetStat"": ""hp_curr"",
+						        ""valueBase"": 10,
+						        ""valueStat"": ""int"",
+						        ""valueMultiplier"": 2
+                        }
+		        ]
+	        }";
 
     static void AddAbilityToModel(JToken abilityJson, EntityModel model)
     {
@@ -67,7 +85,8 @@ public class EntityFactory : MonoBehaviour
 
         AddAbilityToModel(JToken.Parse(tempAbility1), model);
         AddAbilityToModel(JToken.Parse(tempAbility2), model);
-
+        AddAbilityToModel(JToken.Parse(tempAbility3), model);
+        
         PlayerEntityController.AddPlayerEntityController(go, model);
 
         EntityAnimationController animController = go.GetComponent<EntityAnimationController>();
