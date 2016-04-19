@@ -109,7 +109,7 @@
     <Compile Include="Assets\Plugins\JSON\Editor\JSONChecker.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Imports\SpellIcons\README.txt" />
+    <None Include="Assets\Imports\Resources\SpellIcons\README.txt" />
     <None Include="Assets\Imports\Standard Assets\Cameras\CameraGuidelines.txt" />
     <None Include="Assets\Imports\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\Imports\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />

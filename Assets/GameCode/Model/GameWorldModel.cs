@@ -62,7 +62,7 @@ public class GameWorldModel : ICastPhysics, ICastWorldDelegate
         EntityModel model = entity as EntityModel;
         RemoveGameObjectEntityPair(model.gameObject, true);
 
-        EventBus.game.dispatch(new EntityDied(entity));
+        EventBus.game.dispatch(new EntityDied(entity as EntityModel));
     }
 
     // ICastPhysics

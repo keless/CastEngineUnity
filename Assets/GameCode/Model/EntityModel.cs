@@ -64,20 +64,20 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
     public GameObject gameObject { get; set; }
     public Vector3 position { get { return gameObject.transform.position; } }
 
-	bool _destroyed = false;
-	~EntityModel() 
-	{
-		if (!_destroyed) {
-			Debug.LogError ("EntityModel destructor called before Destroy(), someone forgot to clean up");
-			this.Destroy ();
-		}
-	}
-	public void Destroy()
-	{
+    bool _destroyed = false;
+    ~EntityModel()
+    {
+        if (!_destroyed) {
+            Debug.LogError("EntityModel destructor called before Destroy(), someone forgot to clean up");
+            this.Destroy();
+        }
+    }
+    public void Destroy()
+    {
         Debug.Log("destroying EntityModel(" + m_name + ")");
         _destroyed = true;
-		eventBus.Destroy();
-	}
+        eventBus.Destroy();
+    }
 
     public string getName()
     {
@@ -125,12 +125,32 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
             }
         }
 
-        if( json.hasOwnMember("inventory"))
+        if (json.hasOwnMember("inventory"))
         {
             //todo
         }
 
         return true;
+    }
+
+    public Dictionary<string, CastEffect> getBuffs()
+    {
+        return m_buffs;
+    }
+
+    public Dictionary<string, CastEffect> getDebuffs()
+    {
+        return m_debuffs;
+    }
+
+    public List<CastEffect> getNegativeEffects()
+    {
+        return m_negativeEffects;
+    }
+
+    public List<CastEffect> getPositiveEffects()
+    {
+        return m_positiveEffects;
     }
 
     public List<CastCommandState> getAbilities()
@@ -288,7 +308,6 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
     //effect is ARRIVING at this entity
     public void applyEffect(CastEffect effect)
     {
-        
         if( effect.getLifeTime() == 0 )
         {
             Debug.Log("apply effect - instant");
@@ -302,10 +321,12 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
                     break;
                 case CastEffectType.SUPPRESS_STAT:
                     m_debuffs.Add(effect.getName(), effect);
+                    this.dispatch(new GameEntityDebuffApplied(effect));
                     break;
                 case CastEffectType.DAMAGE_STAT:
                     Debug.Log("apply effect - dot");
                     m_negativeEffects.Add(effect);
+                    this.dispatch(new GameEntityDebuffApplied(effect));
                     break;
                 case CastEffectType.HEAL_STAT:
                     Debug.Log("apply effect - hot");
@@ -322,7 +343,6 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
     }
     public void removeEffect(CastEffect effect)
     {
-        //todo
         switch(effect.getType())
         {
             case CastEffectType.BUFF_STAT:
@@ -330,9 +350,11 @@ public class EntityModel : ICastEntity, IEventBus, IHitpointValueProvider
                 break;
             case CastEffectType.SUPPRESS_STAT:
                 m_debuffs.Remove(effect.getName());
+                this.dispatch(new GameEntityDebuffRemoved(effect));
                 break;
             case CastEffectType.DAMAGE_STAT:
                 m_negativeEffects.Remove(effect);
+                this.dispatch(new GameEntityDebuffRemoved(effect));
                 break;
             case CastEffectType.HEAL_STAT:
                 m_positiveEffects.Remove(effect);

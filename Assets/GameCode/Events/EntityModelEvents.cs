@@ -105,11 +105,32 @@ class GameEntityPropertyChangeEvt : EventObject
 
 class GameEntityReactEvt : EventObject
 {
+    public const string EvtName = "GameEntityReactEvt";
     public JToken reaction;
     public CastEffect source;
-    public GameEntityReactEvt(JToken react, CastEffect src) : base("GameEntityReactEvt")
+    public GameEntityReactEvt(JToken react, CastEffect src) : base(EvtName)
     {
         reaction = react;
+        source = src;
+    }
+}
+
+class GameEntityDebuffApplied : EventObject
+{
+    public const string EvtName = "GameEntityDebuffApplied";
+    public CastEffect source;
+    public GameEntityDebuffApplied(CastEffect src) : base(EvtName)
+    {
+        source = src;
+    }
+}
+
+class GameEntityDebuffRemoved : EventObject
+{
+    public const string EvtName = "GameEntityDebuffRemoved";
+    public CastEffect source;
+    public GameEntityDebuffRemoved(CastEffect src) : base(EvtName)
+    {
         source = src;
     }
 }
@@ -117,10 +138,11 @@ class GameEntityReactEvt : EventObject
 //NOTE: dispatches on global game bus, not the GameEntity
 class GameEntityEffectEvt : EventObject
 {
+    public const string EvtName = "GameEntityEffectEvt";
     public string effectName;
     public ICastEntity from;
     public ICastEntity to;
-    public GameEntityEffectEvt(string effectEventName, ICastEntity f, ICastEntity t) : base("GameEntityEffectEvt")
+    public GameEntityEffectEvt(string effectEventName, ICastEntity f, ICastEntity t) : base(EvtName)
     {
         effectName = effectEventName;
         from = f;

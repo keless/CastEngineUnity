@@ -23,5 +23,19 @@ class SkillButtonFactory
 
         return btn;
     }
+
+    public static Image CreateDebuffIcon( CastEffect debuff )
+    {
+        Image iconPre = (Image)Resources.Load<Image>("imgTargetDebuffIcon");
+        Image icon = GameObject.Instantiate(iconPre);
+
+        //todo: data-drive this
+
+        Sprite sprIcon = Resources.Load<Sprite>("SpellIcons/horror-acid-3");
+
+        icon.sprite = sprIcon;
+
+        return icon;
+    }
 }
 

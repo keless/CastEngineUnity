@@ -175,7 +175,7 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
 
         if( currentTargetCount != newTargetCount )
         {
-            EventBus.game.dispatch(new PlayerTargetSelected(newTarget));
+            EventBus.game.dispatch(new PlayerTargetSelected(newTarget as EntityModel));
         }
     }
 
@@ -193,7 +193,7 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
 
             List<ICastEntity> currentTargets = target.getEntityList();
             ICastEntity newTarget = (currentTargets.Count == 0) ? null : currentTargets[0];
-            EventBus.game.dispatch(new PlayerTargetSelected(newTarget));
+            EventBus.game.dispatch(new PlayerTargetSelected(newTarget as EntityModel));
         }
     }
 

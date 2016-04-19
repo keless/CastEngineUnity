@@ -175,7 +175,7 @@ public class CastEffect
         return this.m_pTarget;
     }
     //ICastEntity
-    public ICastEntity getOrigin()
+    public ICastEntity getOriginEntity()
     {
         return this.m_pOrigin;
     }
@@ -190,12 +190,6 @@ public class CastEffect
     public CastCommandState getParentState()
     {
         return this.m_pParent;
-    }
-
-    //ICastEntity
-    public ICastEntity getOriginEntity()
-    {
-        return this.m_pOrigin;
     }
 
     // in: double currtime

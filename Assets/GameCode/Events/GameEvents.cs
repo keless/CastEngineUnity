@@ -9,9 +9,9 @@ using System.Collections.Generic;
 public class PlayerTargetSelected : EventObject
 {
     public const string EvtName = "PlayerTargetSelected";
-    public ICastEntity target = null;
+    public EntityModel target { get; private set; }
 
-    public PlayerTargetSelected(ICastEntity targ) : base(EvtName)
+    public PlayerTargetSelected(EntityModel targ) : base(EvtName)
     {
         target = targ;
     }
@@ -23,9 +23,9 @@ public class PlayerTargetSelected : EventObject
 public class EntityDied : EventObject
 {
     public const string EvtName = "EntityDied";
-    public ICastEntity target = null;
+    public EntityModel target { get; private set; }
 
-    public EntityDied(ICastEntity targ) : base (EvtName)
+    public EntityDied(EntityModel targ) : base (EvtName)
     {
         target = targ;
     }
