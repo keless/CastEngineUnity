@@ -95,13 +95,9 @@ public class PlayerEntityController : CommonMonoBehaviour, IHitpointValueProvide
             doPlayerTargetChange();
         }
 
-        if(evt.keyCode == KeyCode.Alpha1)
+        if(evt.keyCode >= KeyCode.Alpha1 && evt.keyCode <= KeyCode.Alpha9 )
         {
-            attemptAbility(0);
-        }
-        if (evt.keyCode == KeyCode.Alpha2)
-        {
-            attemptAbility(1);
+            attemptAbility(evt.keyCode - KeyCode.Alpha1);
         }
     }
 

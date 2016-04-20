@@ -1,0 +1,13 @@
+﻿
+
+* attack particles
+* wow camera system?
+* world/level to test inside of
+
+
+* cast animation
+* attack animation
+* recv damage animation
+* damage numbers?
+
+
