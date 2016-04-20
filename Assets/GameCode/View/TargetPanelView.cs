@@ -83,14 +83,14 @@ public class TargetPanelView : CommonMonoBehaviour {
 
     void updateDebuffIcons()
     {
-        var debuffs = m_target.getDebuffs();
-        var negatives = m_target.getNegativeEffects();
-
         //TODO: dont nuke this completely
         debuffAnchor.DetachChildren();
         debuffIcons.Clear();
 
         if (m_target == null) return;
+
+        var debuffs = m_target.getDebuffs();
+        var negatives = m_target.getNegativeEffects();
 
         Vector3 pos = debuffAnchor.transform.position;
         foreach(var pair in debuffs)
