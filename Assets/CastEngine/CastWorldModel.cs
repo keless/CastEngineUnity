@@ -126,7 +126,8 @@ public class CastWorldModel
     {
         if( RemoveEntity(entity) )
         {
-            if (m_delegate != null) m_delegate.onEntityDeath(entity);
+            Debug.Assert(m_delegate != null);
+            m_delegate.onEntityDeath(entity);
         }
     }
 
